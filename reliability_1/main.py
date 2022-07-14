@@ -6,7 +6,10 @@ config.background_color= DARK_GREY
 config.quality='medium_quality'
 
 #Naming convention for text and objects
-# xO_y...y
+# xOOxO_y...y
+
+#First number OO
+#11:slide number
 
 #First letter x
 #t: text
@@ -27,32 +30,40 @@ class Reliability(Scene):
 
         #!What is relaiability exactly
 
-        s1_hdd=SVGMobject("graphics/harddrive.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).rotate(120)
+        s01x1_hdd=SVGMobject("graphics/harddrive.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).rotate(120)
 
-        t1=Tex(r"What is reliability?",font_size=60)
+        t01x1=Tex(r"What is reliability?",font_size=60)
 
-        t2_hdd=Tex(r"MTBF\\4 million hours",font_size=23).rotate(120)
-        t4=Tex(r"MTTF").rotate(-23)
-        t5=Tex(r"MTTR").rotate(56)
-        t6=Tex(r"Seems to never break")
-        t7=Tex(r"Just needs new Caps")
+        t01x2_hdd=Tex(r"MTBF\\4 million hours",font_size=23).rotate(120)
+        t01x4=Tex(r"MTTF").rotate(-23)
+        t01x5=Tex(r"MTTR").rotate(56)
+        t01x6=Tex(r"Seems to never break")
+        t01x7=Tex(r"Just needs new Caps")
 
-        g1_title= VGroup(t1,t4).arrange(DOWN, buff=1)
-        g1_title.move_to(UP*1.5)
+        g01x1_title= VGroup(t01x1,t01x2_hdd).arrange(DOWN, buff=1)
+        g01x1_title.move_to(UP*1.5)
 
-        g2_hdd=VGroup(t2_hdd,s1_hdd).arrange(DOWN).move_to(DOWN*2+RIGHT*5)
+        g01x2_hdd=VGroup(t01x2_hdd,s01x1_hdd).arrange(DOWN).move_to(DOWN*2+RIGHT*5)
 
-        g1_fadeout=(FadeOut(g1_title,shift=UP))
+        g01x3_fadeout=(FadeOut(g01x1_title,shift=UP))
 
 
-        self.add(g1_title,g2_hdd)
+        self.add(g01x1_title,g01x2_hdd)
         self.wait(1)
-        self.play(g1_fadeout)
+        self.play(g01x3_fadeout)
         self.wait(1)
+        self.clear
 
         #!On different elctronic devices like Harddrives are printed some numbers
 
+
+
+
+
         #!Will it really run 4 million hours, and why does it seem that modern car break down more regularly
+
+
+
 
         #!Of course  it is only a statistical figure
 
