@@ -5,6 +5,21 @@ from numpy import *
 config.background_color= DARK_GREY
 config.quality='medium_quality'
 
+#Naming convention for text and objects
+# xO_y...y
+
+#First letter x
+#t: text
+#g: textgroup
+#h: array
+#s: svg
+#o: object
+
+#Frist number O
+#1: enumerator
+
+#string y...y
+#identifyer for understanding
 
 
 class Reliability(Scene):
