@@ -18,6 +18,7 @@ config.quality='medium_quality'
 #s: svg
 #o: object
 
+
 #Frist number O
 #1: enumerator
 
@@ -67,7 +68,30 @@ class Reliability(Scene):
 
         #!Of course  it is only a statistical figure
 
+
         #!Bathtub curve
+
+        o05x1=Axes(x_range=[0, 3, 1],
+            y_range=[0, 1, 1],
+            x_length=4,
+            y_length=2,
+            tips=False
+        )
+
+        o05x2=o05x1.plot(lambda x:
+                             np.exp(-x),
+                             x_range=[0,1], use_smoothing=False)
+        o05x3=o05x1.plot(lambda x:
+                             np.exp(-1),
+                             x_range=[1,2],use_smoothing=False)
+        o05x4=o05x1.plot(lambda x:
+                             np.exp(x-3),
+                             x_range=[2,3],
+                             use_smoothing=False)
+
+        self.add(o05x1,o05x2,o05x3,o05x4)
+        self.wait(1)
+        self.clear()
 
         #!"Electronic devices fail with following distribution", early, random and wearout failures
 
