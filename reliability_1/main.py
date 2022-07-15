@@ -75,21 +75,26 @@ class Reliability(Scene):
             y_range=[0, 1, 1],
             x_length=4,
             y_length=2,
-            tips=False
+            tips=True,s
         )
-
         o05x2=o05x1.plot(lambda x:
-                             np.exp(-x),
-                             x_range=[0,1], use_smoothing=False)
+                             np.exp(-x)-0.3,
+                             x_range=[0,0.75], use_smoothing=False)
         o05x3=o05x1.plot(lambda x:
-                             np.exp(-1),
-                             x_range=[1,2],use_smoothing=False)
+                             np.exp(-0.75)-0.3,
+                             x_range=[0.75,2.25],use_smoothing=False)
         o05x4=o05x1.plot(lambda x:
-                             np.exp(x-3),
-                             x_range=[2,3],
+                             np.exp(x-3)-0.3,
+                             x_range=[2.25,3],
                              use_smoothing=False)
 
         self.add(o05x1,o05x2,o05x3,o05x4)
+        self.wait(1)
+        self.play(o05x2.animate.set_color(PINK))
+        self.wait(1)
+        self.play(o05x4.animate.set_color(PINK))
+        self.wait(1)
+        self.play(o05x3.animate.set_color(YELLOW))
         self.wait(1)
         self.clear()
 
