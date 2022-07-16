@@ -17,6 +17,7 @@ config.quality='medium_quality'
 #h: array
 #s: svg
 #o: object
+#v: variable
 
 
 #Frist number O
@@ -71,24 +72,54 @@ class Reliability(Scene):
 
         #!Bathtub curve
 
-        o05x1=Axes(x_range=[0, 3, 1],
-            y_range=[0, 1, 1],
-            x_length=4,
-            y_length=2,
-            tips=True,s
-        )
-        o05x2=o05x1.plot(lambda x:
-                             np.exp(-x)-0.3,
-                             x_range=[0,0.75], use_smoothing=False)
-        o05x3=o05x1.plot(lambda x:
-                             np.exp(-0.75)-0.3,
-                             x_range=[0.75,2.25],use_smoothing=False)
-        o05x4=o05x1.plot(lambda x:
-                             np.exp(x-3)-0.3,
-                             x_range=[2.25,3],
-                             use_smoothing=False)
+        #Basic Axes, length can't be changed
+        #o05x1=Axes(x_range=[0,3,1],
+                        #y_range=[0, 1, 1],
+                        #x_length=5,
+                        #y_length=3,
+                        #tips=True,
+        #)
 
-        self.add(o05x1,o05x2,o05x3,o05x4)
+        #Axes with ValueTracker, to change parameters and enable animations
+        v05x1=ValueTracker(5)
+        o05x1=always_redraw(lambda:Axes
+                                (x_range=[0,3,1],
+                                y_range=[0, 1, 1],
+                                x_length=v05x1.get_value(),
+                                y_length=3,
+                                tips=True,
+                                )
+                            )
+
+
+        #Functions to indicate the early stage, random stage, and wearout failures
+        o05x2=always_redraw(lambda: o05x1.plot
+                                (lambda x:np.exp(-x)-0.3,
+                                    x_range=[0,1],
+                                    use_smoothing=False
+                                )
+                            )
+
+        o05x3=always_redraw(lambda: o05x1.plot
+                                (lambda x:np.exp(-1)-0.3,
+                                x_range=[1,2],
+                                use_smoothing=False
+                                )
+                            )
+
+        o05x4=always_redraw(lambda: o05x1.plot
+                                (lambda x:
+                                np.exp(x-3)-0.3,
+                                x_range=[2,3],
+                                use_smoothing=False
+                                )
+                            )
+
+
+
+        self.wait(1)
+        self.clear
+        self.play(FadeIn(o05x1))
         self.wait(1)
         self.play(o05x2.animate.set_color(PINK))
         self.wait(1)
@@ -97,6 +128,7 @@ class Reliability(Scene):
         self.play(o05x3.animate.set_color(YELLOW))
         self.wait(1)
         self.clear()
+
 
         #!"Electronic devices fail with following distribution", early, random and wearout failures
 
@@ -112,13 +144,15 @@ class Reliability(Scene):
 
         #!Dive into availability with repair time figures
 
-        #!Decreaseing  Reliability
+        #!Decreaseing  Reliability is easy
 
         #!Ambient system influences, look in script about silicon lifetime vs tempature
 
         #!Increase reliability
 
         #!Parallel systems
+
+
 
 
 
