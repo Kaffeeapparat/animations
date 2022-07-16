@@ -1,6 +1,6 @@
 from manim import *
 from numpy import *
-
+from colour import Color
 
 config.background_color= DARK_GREY
 config.quality='medium_quality'
@@ -197,21 +197,18 @@ class Reliability(Scene):
         t10x1.to_corner(LEFT+DOWN)
 
         t10x2=[]
-        for i in range(0,10,1):
-            t10x2.append(always_redraw(lambda: t10x1.plot
-                                        (lambda x: 1-(1-exp(-10*x))**i,
-                                        x_range=[0,1],
-                                        )
-                                    )
-                                )
+        g10x1=VGroup()
+        for i in range(1,10,1):
+            g10x1.add(t10x1.plot
+                      (lambda x: 1-(1-exp(-5*x))**i,
+                            x_range=[0,1],
+                            color=Color(hue=i/10,saturation=1,luminance=0.5)
+                        )
+                    )
 
-        self.clear()
-        self.play(t10x1.animate)
-        for i in range(len(t10x2)):
-            #self.play(FadeIn(t10x1[i]))
-            self.add(t10x2[i])
-            self.wait(0.5)
-        self.wait(1)
+        self.add(t10x1)
+        self.play(AnimationGroup(*[FadeIn(s) for s in g10x1],lag_ratio=1))
+        self.wait(5)
 
 
 
