@@ -54,7 +54,7 @@ class Reliability(Scene):
         self.wait(1)
         self.play(g01x3_fadeout)
         self.wait(1)
-        self.clear
+        self.clear()
 
         #!On different elctronic devices like Harddrives are printed some numbers
 
@@ -81,7 +81,7 @@ class Reliability(Scene):
         #)
 
         #Axes with ValueTracker, to change parameters and enable animations
-        v05x1=ValueTracker(5)
+        v05x1=ValueTracker(2)
         o05x1=always_redraw(lambda:Axes
                                 (x_range=[0,3,1],
                                 y_range=[0, 1, 1],
@@ -115,7 +115,16 @@ class Reliability(Scene):
                                 )
                             )
 
+        o05x5=Brace(o05x3)
+        o05x6=Brace(o05x2)
+        o05x7=Brace(o05x4)
+        t05x1=Tex(r"early\\failures")
+        t05x2=Tex(r"random\\failures")
+        t05x3=Tex(r"wearout\\failures")
 
+        g05x1_ef=VGroup(o05x5,t05x1).arrange(DOWN,buff=0.5).next_to(o05x2,DOWN)
+        g05x2_rf=VGroup(o05x6,t05x2).arrange(DOWN,buff=0.5).next_to(o05x3,DOWN)
+        g05x3_wf=VGroup(o05x7,t05x3).arrange(DOWN,buff=0.5).next_to(o05x4,DOWN*1.09)
 
         self.wait(1)
         self.clear
@@ -126,11 +135,17 @@ class Reliability(Scene):
         self.play(o05x4.animate.set_color(PINK))
         self.wait(1)
         self.play(o05x3.animate.set_color(YELLOW))
+        self.play(FadeIn(g05x1_ef))
+        self.play(FadeIn(g05x2_rf))
+        self.play(FadeIn(g05x3_wf))
+
         self.wait(1)
         self.clear()
 
 
         #!"Electronic devices fail with following distribution", early, random and wearout failures
+
+
 
         #!Distingushing the important part of the Bathtub and the nonimportant part of the bathtub
 
@@ -148,9 +163,12 @@ class Reliability(Scene):
 
         #!Ambient system influences, look in script about silicon lifetime vs tempature
 
-        #!Increase reliability
+        #!Increase reliability with parallel systems
 
-        #!Parallel systems
+        #Big Axes that shows the effect on adding multiple devices in parallel on MTBF
+
+
+
 
 
 
