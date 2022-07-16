@@ -114,13 +114,13 @@ class Reliability(Scene):
         o03x5=Brace(o03x3)
         o03x6=Brace(o03x2)
         o03x7=Brace(o03x4)
-        t03x1=Tex(r"early\\failures")
-        t03x2=Tex(r"random\\failures")
-        t03x3=Tex(r"wearout\\failures")
+        t05x1=Tex(r"early\\failures")
+        t05x2=Tex(r"random\\failures")
+        t05x3=Tex(r"wearout\\failures")
 
-        g03x1_ef=VGroup(o03x5,t03x1).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
-        g03x2_rf=VGroup(o03x6,t03x2).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
-        g03x3_wf=VGroup(o03x7,t03x3).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
+        g03x1_ef=VGroup(o03x5,t05x1).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
+        g03x2_rf=VGroup(o03x6,t05x2).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
+        g03x3_wf=VGroup(o03x7,t05x3).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
 
         self.wait(1)
         self.clear
@@ -153,28 +153,40 @@ class Reliability(Scene):
 
         #!Distingushing the important part of the Bathtub and the nonimportant part of the bathtub
 
-        #!Brilliantly modeling the exp(-tλ) curve in relationship to bathtub curve
 
         #!Calculating lambda
 
+        t04x1=(r"Estimation of the failure rate")
+
+        #!Brilliantly modeling the exp(-tλ) curve in relationship to bathtub curve
+
         #!Modeling some examples, headlights for example
 
-        #!The task with the drinking water system is funny
+        t05x1=(r"For example headlights")
 
         #!Dive into availability with repair time figures
 
+        t06x1=(r"Availability is dircetly connected to the reliability")
+
         #!Decreaseing  Reliability is easy
+
+        t07x1=(r"Adding components togeather increasees variables")
 
         #!Ambient system influences, look in script about silicon lifetime vs tempature
 
+        t08x1=(r"Decreaseing the reliability even more")
+
         #!Increase reliability with parallel systems
+
+        t09x1=(r"Increasing the reliability of our system")
 
 
         #Big Axes that shows the effect on adding multiple devices in parallel on MTBF
 
+        t10x1=(r"Reliability of parallel systems visualised")
 
 
-        o08x1=Axes(tips=False,
+        t10x1=Axes(tips=False,
                  x_range=[0,1,1],
                  y_range=[0,1,1],
                  x_length=12,
@@ -182,11 +194,11 @@ class Reliability(Scene):
                  )
 
 
-        o08x1.to_corner(LEFT+DOWN)
+        t10x1.to_corner(LEFT+DOWN)
 
-        h08x1=[]
+        t10x2=[]
         for i in range(0,10,1):
-            h08x1.append(always_redraw(lambda: o08x1.plot
+            t10x2.append(always_redraw(lambda: t10x1.plot
                                         (lambda x: 1-(1-exp(-10*x))**i,
                                         x_range=[0,1],
                                         )
@@ -194,10 +206,10 @@ class Reliability(Scene):
                                 )
 
         self.clear()
-        self.play(o08x1.animate)
-        for i in range(len(h08x1)):
-            #self.play(FadeIn(h08x1[i]))
-            self.add(h08x1[i])
+        self.play(t10x1.animate)
+        for i in range(len(t10x2)):
+            #self.play(FadeIn(t10x1[i]))
+            self.add(t10x2[i])
             self.wait(0.5)
         self.wait(1)
 
