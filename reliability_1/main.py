@@ -58,10 +58,6 @@ class Reliability(Scene):
 
         #!On different elctronic devices like Harddrives are printed some numbers
 
-
-
-
-
         #!Will it really run 4 million hours, and why does it seem that modern car break down more regularly
 
 
@@ -128,9 +124,17 @@ class Reliability(Scene):
 
         self.wait(1)
         self.clear
+        v05x1.set_value(10)
         self.play(FadeIn(o05x1))
         self.wait(1)
+        self.play(v05x1.animate.set_value(12))
+
+        o05x2.update()
+        o05x3.update()
+        o05x4.update()
+
         self.play(o05x2.animate.set_color(PINK))
+        o05x2.update()
         self.wait(1)
         self.play(o05x4.animate.set_color(PINK))
         self.wait(1)
@@ -167,6 +171,32 @@ class Reliability(Scene):
 
         #Big Axes that shows the effect on adding multiple devices in parallel on MTBF
 
+        o08x1=Axes(tips=False,
+                 x_range=[0,1,1],
+                 y_range=[0,1,1],
+                 x_length=12,
+                 y_length=6,
+                 )
+
+
+        o08x1.to_corner(LEFT+DOWN)
+
+        h08x1=[]
+        for i in range(0,10,1):
+            h08x1.append(always_redraw(lambda: o08x1.plot
+                                        (lambda x: 1-(1-exp(-10*x))**i,
+                                        x_range=[0,1],
+                                        )
+                                    )
+                                )
+
+        self.clear()
+        self.add(o08x1)
+        for i in range(len(h08x1)):
+            #self.play(FadeIn(h08x1[i]))
+            self.add(h08x1[i])
+            self.wait(0.5)
+        self.wait(1)
 
 
 
