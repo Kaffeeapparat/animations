@@ -153,6 +153,7 @@ class Reliability(Scene):
 
         #!Distingushing the important part of the Bathtub and the nonimportant part of the bathtub
 
+            self.play(ReplacementTransform(o01x1,g04x2[i]))
 
         #!Calculating lambda
 
