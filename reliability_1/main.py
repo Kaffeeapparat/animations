@@ -60,7 +60,7 @@ class Reliability(Scene):
 
         #!Will it really run 4 million hours, and why does it seem that modern car break down more regularly
 
-
+        #!First define the device that gets acted
 
 
         #!Of course  it is only a statistical figure
@@ -78,19 +78,18 @@ class Reliability(Scene):
 
         #Axes with ValueTracker, to change parameters and enable animations
         v03x1=ValueTracker(2)
-        o03x1=always_redraw(lambda:Axes
-                                (x_range=[0,3,1],
+        o03x1=Axes(x_range=[0,3,1],
                                 y_range=[0, 1, 1],
                                 x_length=v03x1.get_value(),
                                 y_length=3,
                                 tips=True,
                                 )
-                            )
+
 
 
         #Functions to indicate the early stage, random stage, and wearout failures
         o03x2=always_redraw(lambda: o03x1.plot
-                                (lambda x:np.exp(-x)-0.3,
+                                    (lambda x:np.exp(-x)-0.3,
                                     x_range=[0,1],
                                     use_smoothing=False
                                 )
@@ -155,9 +154,13 @@ class Reliability(Scene):
 
         t04x1=Tex(r"Estimation of the failure rate")
 
+        t04x1=MathTex(r"\lambda\approx \frac{\Delta n}{n\Delta t}")
 
         t04x2=Tex(r"What does fail?")
 
+        self.add(t04x1)
+        self.wait(1)
+        self.clear()
         #Showing the Din Symbol of a resistor and merging iot into different Symbols
 
         t04x3=Tex(r"Definition: A device with certain properties")
