@@ -107,6 +107,9 @@ class Reliability(Scene):
 
 
         #!Bathtub curve
+        t03x1=Tex(r"Typical failure distribution of electronic systems")
+
+
 
         #Basic Axes, length can't be changed
         #o03x1=Axes(x_range=[0,3,1],
@@ -117,70 +120,70 @@ class Reliability(Scene):
         #)
 
         #Axes with ValueTracker, to change parameters and enable animations
-        v03x1=ValueTracker(2)
+        v03x1=ValueTracker(10)
         o03x1=Axes(x_range=[0,3,1],
                                 y_range=[0, 1, 1],
                                 x_length=v03x1.get_value(),
                                 y_length=3,
                                 tips=True,
+                                y_axis_config={
+                                    #"numbers_to_include":[1,1],
+
+                                    }
                                 )
-
-
+        o03x1_ylb=o03x1.get_y_axis_label("Probability of failure")
+        o03x1_xlb=o03x1.get_x_axis_label("t")
+        g03x4_labels=VGroup(o03x1_xlb,o03x1_ylb)
 
         #Functions to indicate the early stage, random stage, and wearout failures
-        o03x2=always_redraw(lambda: o03x1.plot
-                                    (lambda x:np.exp(-x)-0.3,
-                                    x_range=[0,1],
-                                    use_smoothing=False
-                                )
+        o03x2=o03x1.plot(lambda x:np.exp(-x)-0.3,
+                                x_range=[0,1],
+                                use_smoothing=False
                             )
 
-        o03x3=always_redraw(lambda: o03x1.plot
-                                (lambda x:np.exp(-1)-0.3,
+
+        o03x3=o03x1.plot(lambda x:np.exp(-1)-0.3,
                                 x_range=[1,2],
                                 use_smoothing=False
-                                )
                             )
 
-        o03x4=always_redraw(lambda: o03x1.plot
-                                (lambda x:
-                                np.exp(x-3)-0.3,
+
+        o03x4=o03x1.plot(lambda x:np.exp(x-3)-0.3,
                                 x_range=[2,3],
                                 use_smoothing=False
                                 )
-                            )
+
+        g03x5_bathtub=VGroup(o03x2,o03x3,o03x4)
 
         o03x5=Brace(o03x3)
         o03x6=Brace(o03x2)
         o03x7=Brace(o03x4)
-        t05x1=Tex(r"early\\failures")
-        t05x2=Tex(r"random\\failures")
-        t05x3=Tex(r"wearout\\failures")
+        t05x4=Tex(r"early\\failures")
+        t05x5=Tex(r"random\\failures")
+        t05x6=Tex(r"wearout\\failures")
 
-        g03x1_ef=VGroup(o03x5,t05x1).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
-        g03x2_rf=VGroup(o03x6,t05x2).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
-        g03x3_wf=VGroup(o03x7,t05x3).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
+        g03x1_ef=VGroup(o03x5,t05x4).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
+        g03x2_rf=VGroup(o03x6,t05x5).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
+        g03x3_wf=VGroup(o03x7,t05x6).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
 
         self.wait(1)
         self.clear
         v03x1.set_value(10)
-        self.play(FadeIn(o03x1))
+        self.play(Create(o03x1))
+        self.play(AnimationGroup(*[FadeIn(s) for s in g03x4_labels],lag_ratio=0.5))
         self.wait(1)
-        self.play(v03x1.animate.set_value(12))
+        self.play(AnimationGroup(*[Create(s) for s in g03x5_bathtub],lag_ratio=1))
 
-        o03x2.update()
-        o03x3.update()
-        o03x4.update()
-
-        self.play(o03x2.animate.set_color(PINK))
-        o03x2.update()
-        self.wait(1)
-        self.play(o03x4.animate.set_color(PINK))
-        self.wait(1)
-        self.play(o03x3.animate.set_color(YELLOW))
+        #Animate the brace fade in after the color shift
+        self.play(o03x2.animate.set_color(BLUE_A))
         self.play(FadeIn(g03x1_ef))
-        self.play(FadeIn(g03x2_rf))
+        self.wait(1)
+        self.play(o03x4.animate.set_color(BLUE_A))
         self.play(FadeIn(g03x3_wf))
+        self.wait(1)
+        self.play(o03x3.animate.set_color(YELLOW_C))
+        self.play(FadeIn(g03x2_rf))
+
 
         self.wait(1)
         self.clear()
