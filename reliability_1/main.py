@@ -60,7 +60,6 @@ class Reliability(Scene):
 
         #!Will it really run 4 million hours, and why does it seem that modern car break down more regularly
 
-        #!First define the device that gets acted
         #!First define the device that gets observed
 
         t02x1=Tex(r"Definition: A device that runs and fails")
