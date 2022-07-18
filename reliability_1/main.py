@@ -104,13 +104,13 @@ class Reliability(Scene):
         self.wait(1)
         self.clear()
 
-        t02x2=Tex(r"Estimation of the failure rate")
+        self.play(ReplacementTransform(o01x1,s02x1_be.move_to(ORIGIN).set_color(GREEN)))
 
-        t02x3=MathTex(r"\lambda\approx \frac{\Delta n}{n\Delta t}")
+        g02x4_bematrix=VGroup(*[SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.06) for s in range(0,100)])
+        g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
+        self.play(ReplacementTransform(s02x1_be,g02x4_bematrix))
 
-        t02x4=Tex(r"What does fail?")
-
-        self.add(t02x1)
+        #self.play(AnimationGroup(*[Create(s) for s in g02x4_bematrix  ],lag_ratio=0.1))
         self.wait(1)
         self.clear()
 
