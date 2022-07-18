@@ -62,6 +62,46 @@ class Reliability(Scene):
 
         #!First define the device that gets acted
 
+        t02x1=Tex(r"Definition: A device with certain properties")
+
+        #be stands for Bauelement, the basic bulding block of devices
+        s02x1_be=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
+
+        s02x2_be=SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
+
+        s02x3_d1=SVGMobject("graphics/diode.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
+
+        s02x4_d2=SVGMobject("graphics/diode2.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
+
+        s02x2_cap=SVGMobject("graphics/cap.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
+
+        g02x1=VGroup()
+        for i in range(1,10,1):
+            g02x1.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.3))
+        g02x1.arrange(DOWN,buff=0)
+
+        g02x2=VGroup(s02x3_d1,s02x4_d2,s02x2_cap)
+
+        self.add(s02x1_be)
+        o01x1=s02x1_be
+        for i in range(0,3,1):
+            self.play(ReplacementTransform(o01x1,g02x2[i]))
+            o01x1=g02x2[i]
+
+        t02x4=Tex(r"A device fails with a certain rate")
+        self.wait(1)
+        self.clear()
+
+        t02x2=Tex(r"Estimation of the failure rate")
+
+        t02x3=MathTex(r"\lambda\approx \frac{\Delta n}{n\Delta t}")
+
+        t02x4=Tex(r"What does fail?")
+
+        self.add(t02x1)
+        self.wait(1)
+        self.clear()
+
 
         #!Of course  it is only a statistical figure
 
@@ -152,59 +192,13 @@ class Reliability(Scene):
 
         #!Distingushing the important part of the Bathtub and the nonimportant part of the bathtub
 
-        t04x1=Tex(r"Estimation of the failure rate")
 
-        t04x1=MathTex(r"\lambda\approx \frac{\Delta n}{n\Delta t}")
-
-        t04x2=Tex(r"What does fail?")
-
-        self.add(t04x1)
-        self.wait(1)
-        self.clear()
         #Showing the Din Symbol of a resistor and merging iot into different Symbols
-
-        t04x3=Tex(r"Definition: A device with certain properties")
-
-        #be stands for Bauelement, the basic bulding block of devices
-        s04x1_be=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
-
-        s04x2_be=SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
-
-        s04x3_d1=SVGMobject("graphics/diode.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
-
-        s04x4_d2=SVGMobject("graphics/diode2.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
-
-        s04x2_cap=SVGMobject("graphics/cap.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
-
-        g04x1=VGroup()
-        for i in range(1,10,1):
-            g04x1.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.3))
-        g04x1.arrange(DOWN,buff=0)
-
-        g04x2=VGroup(s04x3_d1,s04x4_d2,s04x2_cap)
-
-        self.add(s04x1_be)
-        o01x1=s04x1_be
-        for i in range(0,3,1):
-            self.play(ReplacementTransform(o01x1,g04x2[i]))
-            o01x1=g04x2[i]
-
-        t04x4=Tex(r"A device fails with a certain rate")
-        self.wait(1)
-        self.clear()
 
 
         #!Calculating lambda
 
         #Overwork the formulars, does not render because of missing } error
-        #t04x5=Tex(r"devices failed devices *observation t ime")
-        #t04x6=Tex(r"$\Delta$Q",r"\over",r"test")
-
-        #self.add(t04x5)
-        #self.wait(1)
-        #self.play(ReplacementTransform(t04x5,t04x6))
-        #self.wait(1)
-        #self.clear()
 
         #!Brilliantly modeling the exp(-tλ) curve in relationship to bathtub curve
 
