@@ -61,9 +61,15 @@ class Reliability(Scene):
         #!Will it really run 4 million hours, and why does it seem that modern car break down more regularly
 
         #!First define the device that gets acted
+        #!First define the device that gets observed
 
-        t02x1=Tex(r"Definition: A device with certain properties")
+        t02x1=Tex(r"Definition: A device that runs and fails")
 
+        t02x2=Tex(r"State of the Device:")
+        t02x3=Tex(r"functioning",r"defect",font_size=50).arrange(DOWN)
+        g02x3_bestate=VGroup(t02x2,t02x3).arrange(DOWN)
+
+        #tex.animate.set_color(RED),
         #be stands for Bauelement, the basic bulding block of devices
         s02x1_be=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
 
@@ -87,8 +93,14 @@ class Reliability(Scene):
         for i in range(0,3,1):
             self.play(ReplacementTransform(o01x1,g02x2[i]))
             o01x1=g02x2[i]
+        self.wait(1)
+        g02x3_bestate.move_to(ORIGIN+RIGHT*3)
+        self.play(Create(g02x3_bestate))
+        self.wait(1)
 
-        t02x4=Tex(r"A device fails with a certain rate")
+        self.play(g02x3_bestate[1][1].animate.set_color(RED),o01x1.animate.set_color(RED))
+        self.wait(1)
+        self.play(g02x3_bestate[1][0].animate.set_color(GREEN),o01x1.animate.set_color(GREEN))
         self.wait(1)
         self.clear()
 
