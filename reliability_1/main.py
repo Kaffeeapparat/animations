@@ -330,10 +330,104 @@ class Reliability(Scene):
 
         t07x1=Tex(r"Parallel systems",r"\\ rendundancy").move_to(UP*3+LEFT*4)
 
+        t07x2=Tex(r"Serial systems").move_to(UP*3+RIGHT*4)
+
+        s07x1_beh=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.1).rotate(90)
+
+        s07x2_bev=SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5)
+
+        t07x3_cont=MathTex(r"    ...    ")
+        t07x4_cont=MathTex(r"    ...    ")
+
+        g07x1_ser=VGroup()
+
+        #!Decrease reliability with serial systems
+
+        for i in range(0,2):
+            g07x1_ser.add(SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.1))
+
+        g07x1_ser.add(t07x3_cont,s07x1_beh)
+        g07x1_ser.arrange(RIGHT,buff=0.01).move_to(UP*1.5+RIGHT*3)
 
         #!Increase reliability with parallel systems
 
-        t09x1=(r"Increasing the reliability of our system")
+        g07x2_par=VGroup()
+
+        for i in range(0,2):
+            g07x2_par.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.1).rotate(90))
+
+        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=0.01).move_to(UP*1.5+LEFT*3)
+
+        self.add(t07x1,t07x2,g07x1_ser,g07x2_par)
+        self.wait(1)
+
+        t07x5_sRt=MathTex(r"")
+        t07x5_pRt=MathTex(r"")
+
+        o07x1_axp=Axes(tips=False,
+                 x_range=[0,1,1],
+                 y_range=[0,1,1],
+                 x_length=5,
+                 y_length=3,
+                 )
+
+
+        o07x1_axp.move_to(DOWN*2+LEFT*3)
+
+        h07x1=[]
+        g07x3_axp=VGroup()
+        for i in range(1,10,1):
+            g07x3_axp.add(o07x1_axp.plot
+                      (lambda x: 1-(1-exp(-5*x))**i,
+                            x_range=[0,1],
+                            color=Color(hue=i/10,saturation=1,luminance=0.5)
+                        )
+                    )
+
+        self.add(o07x1_axp)
+        self.play(AnimationGroup(*[FadeIn(s) for s in g07x3_axp],lag_ratio=1))
+        self.wait(5)
+
+
+
+        o07x2_axs=Axes(tips=False,
+                 x_range=[0,1,1],
+                 y_range=[0,1,1],
+                 x_length=5,
+                 y_length=3,
+                 )
+
+
+        o07x2_axs.move_to(DOWN*2+RIGHT*3)
+
+        h07x1=[]
+        g07x4_axs=VGroup()
+        for i in range(1,10,1):
+            g07x4_axs.add(o07x2_axs.plot
+                      (lambda x: (exp(-5*x))**i,
+                            x_range=[0,1],
+                            color=Color(hue=i/10,saturation=1,luminance=0.5)
+                        )
+                    )
+
+        self.add(o07x2_axs)
+        self.play(AnimationGroup(*[FadeIn(s) for s in g07x4_axs],lag_ratio=1))
+        self.wait(5)
+
+
+
+        self.clear()
+
+        t09x1=Tex(r"Increasing the reliability of our system")
+
+        t09x2=Tex(r"Redundancy")
+
+        t09x3=MathTex(r"r=r-1")
+
+        self.add(t09x3)
+        self.wait(1)
+        self.clear()
+
 
 
         #Big Axes that shows the effect on adding multiple devices in parallel on MTBF
