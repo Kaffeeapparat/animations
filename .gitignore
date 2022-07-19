@@ -157,8 +157,8 @@ cython_debug/
 
 #my bin files and propieatry programms stuff
 
-.afdesign
-
+*.afdesign
+*.kate-swp
 
 #files to safe meta stuff and smaller reminders and code examples
 
