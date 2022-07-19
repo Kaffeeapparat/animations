@@ -105,14 +105,57 @@ class Reliability(Scene):
 
         self.play(ReplacementTransform(o01x1,s02x1_be.move_to(ORIGIN).set_color(GREEN)))
 
+        #Showing the Din Symbol of a resistor and merging iot into different Symbols
+
         g02x4_bematrix=VGroup(*[SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.06) for s in range(0,100)])
         g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
         self.play(ReplacementTransform(s02x1_be,g02x4_bematrix))
 
         #self.play(AnimationGroup(*[Create(s) for s in g02x4_bematrix  ],lag_ratio=0.1))
         self.wait(1)
-        self.clear()
 
+        #!Calculating lambda
+
+        t02x4_ratep=MathTex(r"\text{rate of failure}\approx\frac{ \text{failed devices} }{ \text{number of devices}\times\text{time difference} }")
+        t02x5_ratec=MathTex(r"\lambda\approx\frac{\Delta n}{n\Delta t}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
+
+        #g02x5_rate=VGroup(t02x4_ratep,t02x5_ratec)
+        self.play(Create(t02x4_ratep))
+        self.wait(1)
+        self.play(ReplacementTransform(t02x4_ratep,t02x5_ratec))
+        self.wait(1)
+
+        o02x01_n=DecimalNumber(
+            100,
+            show_ellipsis=True,
+            num_decimal_places=3,
+            include_sign=True,
+        )
+
+        o02x02_dn=DecimalNumber(
+            0,
+            show_ellipsis=True,
+            num_decimal_places=3,
+            include_sign=True,
+        )
+
+        o02x03_dt=DecimalNumber(
+            0,
+            show_ellipsis=True,
+            num_decimal_places=3,
+            include_sign=True,
+        )
+
+        o02x04_rate=DecimalNumber(
+            0,
+            show_ellipsis=True,
+            num_decimal_places=3,
+            include_sign=True,
+        )
+
+        #showing rate of 1 and others
+        g02x5_bematback=g02x4_bematrix
+        self.clear()
 
         #!Of course  it is only a statistical figure
 
@@ -176,6 +219,10 @@ class Reliability(Scene):
         g03x1_ef=VGroup(o03x5,t05x4).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
         g03x2_rf=VGroup(o03x6,t05x5).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
         g03x3_wf=VGroup(o03x7,t05x6).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
+
+
+        #!"Electronic devices fail with following distribution", early, random and wearout failures
+
 
         self.wait(1)
         self.clear
