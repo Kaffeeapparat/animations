@@ -195,26 +195,70 @@ class Reliability(Scene):
         self.play(o03x3.animate.set_color(YELLOW_C))
         self.play(FadeIn(g03x2_rf))
 
+        g03x2_finallineup=VGroup(o03x1,g03x1_ef,g03x2_rf,g03x3_wf,g03x4_labels,g03x5_bathtub,)
+
 
         self.wait(1)
         self.clear()
 
 
-        #!"Electronic devices fail with following distribution", early, random and wearout failures
-
-
-
         #!Distingushing the important part of the Bathtub and the nonimportant part of the bathtub
 
+        t04x1_Rt=MathTex(r"R\left(t\right)=",r"e",r"^{-t",r"\lambda}")
+        t04x2_Ft=MathTex(r"F\left(t\right)=1-R\left(t\right)")
+        g04x1_f=VGroup(t04x1_Rt,t04x2_Ft).arrange(DOWN).move_to(UP*2+RIGHT*2)
 
-        #Showing the Din Symbol of a resistor and merging iot into different Symbols
+        o04x1=Axes(x_range=[0,3,1],
+                    y_range=[0, 1.5, 1],
+                    x_length=10,
+                    y_length=5,
+                    tips=True,
+                    y_axis_config={
+                    "numbers_to_include":[1,1],
+                                }
+                    ).to_corner(LEFT+DOWN)
+
+        o04x3_ylb=o04x1.get_y_axis_label("Probability of failure")
+        o04x4_xlb=o04x1.get_x_axis_label("t")
 
 
-        #!Calculating lambda
+        o04x5_rt=o04x1.plot(lambda x:np.exp(-x),
+                                x_range=[0,3],
+                                use_smoothing=False,
+                                color=YELLOW_C
+                            )
+        o04x5_ft=o04x1.plot(lambda x:1-np.exp(-x),
+                                x_range=[0,3],
+                                use_smoothing=False,
+                                color=ORANGE
+                            )
 
-        #Overwork the formulars, does not render because of missing } error
+        g04x1_initstart=VGroup(o04x1,o04x5_rt,o04x3_ylb,o04x4_xlb)
 
-        #!Brilliantly modeling the exp(-tλ) curve in relationship to bathtub curve
+        self.play(ReplacementTransform(g03x2_finallineup,g04x1_initstart))
+        self.wait(1)
+        self.wait(1)
+        #self.play()
+
+        o04x6 = o04x1.get_graph_label(
+            graph=o04x5_rt,
+            label=MathTex(r"0.37"),
+            x_val=1,
+            dot=True,
+            direction=UR,)
+
+        o04x7=Line(o04x1.c2p(1,0),o04x1.c2p(1,0.37)).set_color(YELLOW_B)
+        o04x8=Line(o04x1.c2p(1,0.37),o04x1.c2p(1,0.63)).set_color(RED_B)
+
+        self.add(o04x7)
+        self.play(Create(g04x1_f[0]))
+        self.wait(1)
+        self.add(o04x5_ft)
+        self.add(o04x8)
+        self.play(Create(g04x1_f[1]))
+        self.wait(1)
+        self.clear()
+
 
         #!Modeling some examples, headlights for example
 
