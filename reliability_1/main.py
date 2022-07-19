@@ -319,19 +319,17 @@ class Reliability(Scene):
 
         #!Modeling some examples, headlights for example
 
-        t05x1=(r"For example headlights")
+        t05x1=Tex(r"For example headlights")
 
         #!Dive into availability with repair time figures
 
-        t06x1=(r"Availability is dircetly connected to the reliability")
+        t06x1=Tex(r"MTTR")
 
-        #!Decreaseing  Reliability is easy
+        #!In Real world systems are build out of many parts. They influence the reliability, too.
 
-        t07x1=(r"Adding components together increasees variables")
 
-        #!Ambient system influences, look in script about silicon lifetime vs tempature
+        t07x1=Tex(r"Parallel systems",r"\\ rendundancy").move_to(UP*3+LEFT*4)
 
-        t08x1=(r"Decreaseing the reliability even more")
 
         #!Increase reliability with parallel systems
 
@@ -368,7 +366,9 @@ class Reliability(Scene):
         self.wait(5)
 
 
+       #!Ambient system influences, look in script about silicon lifetime vs tempature
 
+        t08x1=(r"Decreaseing the reliability even more")
 
 
 
