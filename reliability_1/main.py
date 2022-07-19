@@ -159,6 +159,16 @@ class Reliability(Scene):
 
         #!Of course  it is only a statistical figure
 
+        t02x6=Tex(r"MTBF/MTTF$\approx10^{-9}$=1 FIT")
+        t02x7=Tex(r"MTBF:",r"Mean Time between failure",r"$\implies$repairable")
+        t02x8=Tex(r"MTTF:",r"Mean Time to failure",r"$\implies$unrepairable")
+
+        g02x6=VGroup(t02x6,t02x7,t02x8)
+        self.add(g02x6.arrange(DOWN))
+        self.wait(1)
+        self.clear()
+
+
 
         #!Bathtub curve
         t03x1=Tex(r"Typical failure distribution of electronic systems")
