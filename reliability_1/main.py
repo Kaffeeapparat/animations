@@ -347,7 +347,7 @@ class Reliability(Scene):
             g07x1_ser.add(SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.1))
 
         g07x1_ser.add(t07x3_cont,s07x1_beh)
-        g07x1_ser.arrange(RIGHT,buff=0.01).move_to(UP*1.5+RIGHT*3)
+        g07x1_ser.arrange(RIGHT,buff=0.01).move_to(UP*1.5+RIGHT*4)
 
         #!Increase reliability with parallel systems
 
@@ -356,7 +356,7 @@ class Reliability(Scene):
         for i in range(0,2):
             g07x2_par.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.1).rotate(90))
 
-        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=0.01).move_to(UP*1.5+LEFT*3)
+        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=0.01).move_to(UP*1.5+LEFT*4)
 
         self.add(t07x1,t07x2,g07x1_ser,g07x2_par)
         self.wait(1)
@@ -378,7 +378,7 @@ class Reliability(Scene):
                  )
 
 
-        o07x1_axp.move_to(DOWN*2+LEFT*3)
+        o07x1_axp.move_to(DOWN*2+LEFT*4)
 
         h07x1=[]
         g07x3_axp=VGroup()
@@ -400,11 +400,11 @@ class Reliability(Scene):
                  x_range=[0,1,1],
                  y_range=[0,1,1],
                  x_length=5,
-                 y_length=3,
+                 y_length=2,
                  )
 
 
-        o07x2_axs.move_to(DOWN*2+RIGHT*3)
+        o07x2_axs.move_to(DOWN*2+RIGHT*4)
 
         h07x1=[]
         g07x4_axs=VGroup()
@@ -449,7 +449,8 @@ class Reliability(Scene):
                  )
 
 
-        t10x1.to_corner(LEFT+DOWN)
+        o07x2_axs.move_to(DOWN*2+LEFT*4)
+
 
         t10x2=[]
         g10x1=VGroup()
