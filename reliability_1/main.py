@@ -361,14 +361,20 @@ class Reliability(Scene):
         self.add(t07x1,t07x2,g07x1_ser,g07x2_par)
         self.wait(1)
 
-        t07x5_sRt=MathTex(r"")
-        t07x5_pRt=MathTex(r"")
+        t07x5_sRt=MathTex(r"R_{serial}\left( t \right)=\prod_{i=1}^{i}R_{i}\left( t \right)=R_{1}\left( t \right)\cdot R_{2}\left( t \right)\cdot ...",font_size=35)
+        t07x6_pRt=MathTex(r"R_{parallel}\left( t \right)=\prod_{i=1}^{i}F_{i}\left( t \right)=F_{1}\left( t \right)\cdot F_{2}\left( t \right)\cdot ...",font_size=35)
+
+        t07x5_sRt.move_to(RIGHT*3.5)
+        t07x6_pRt.move_to(LEFT*3.5)
+
+        self.play(Create(t07x5_sRt),Create(t07x6_pRt))
+
 
         o07x1_axp=Axes(tips=False,
                  x_range=[0,1,1],
                  y_range=[0,1,1],
                  x_length=5,
-                 y_length=3,
+                 y_length=2,
                  )
 
 
