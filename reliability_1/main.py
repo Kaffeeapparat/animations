@@ -18,6 +18,7 @@ config.quality='medium_quality'
 #s: svg
 #o: object
 #v: variable
+#a: arrow
 
 
 #Frist number O
@@ -494,8 +495,8 @@ class Reliability(Scene):
         s11x2_heat=SVGMobject("graphics/heat.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*2+RIGHT*2)
         s11x3_voltage=SVGMobject("graphics/voltage.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*2+LEFT*2)
 
-
-        s11x1_be.move_to(ORIGIN)
+        a11x1_heat=Arrow().put_start_and_end_on(s11x2_heat.get_center(),s11x1_be.get_center()).scale(0.2)
+        a11x2_temp=Arrow().put_start_and_end_on(s11x3_voltage.get_center(),s11x1_be.get_center()).scale(0.2)
 
         t11x1_hum=MathTex(r"rel.Humidity%")
         t11x2_uv=MathTex(r"UV")
@@ -509,6 +510,8 @@ class Reliability(Scene):
         self.add(s11x1_be)
         self.wait(0.5)
         self.add(s11x2_heat,s11x3_voltage)
+        self.wait(0.5)
+        self.add(a11x1_heat,a11x2_temp)
 
         self.add(t11x6_form)
         self.wait(2)
