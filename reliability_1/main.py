@@ -159,12 +159,21 @@ class Reliability(Scene):
 
         #!Of course  it is only a statistical figure
 
-        t02x6=Tex(r"MTBF/MTTF$\approx10^{-9}$=1 FIT")
-        t02x7=Tex(r"MTBF:",r"Mean Time between failure",r"$\implies$repairable")
-        t02x8=Tex(r"MTTF:",r"Mean Time to failure",r"$\implies$unrepairable")
+        t02x6=Tex(r"MTBF/MTTF").move_to(UP*3)
+        t02x8=Tex(r"MTBF:",r"Mean Time between failure",r"$\implies$repairable")
+        t02x7=Tex(r"MTTF:",r"Mean Time to failure",r"$\implies$unrepairable")
 
-        g02x6=VGroup(t02x6,t02x7,t02x8)
+        s02x5_wrench=SVGMobject("graphics/wrench.svg",stroke_color=GREEN,fill_color=GREEN,fill_opacity=1.0).scale(0.5)
+        s02x6_rec=SVGMobject("graphics/recycle.svg",stroke_color=RED,fill_color=RED,fill_opacity=1.0).scale(0.5)
+
+        self.add(t02x6)
+
+        g02x6=VGroup(t02x7[0],t02x7[1])
+        g02x7=VGroup(t02x8[0],t02x8[1])
         self.add(g02x6.arrange(DOWN))
+        self.play(Create(s02x5_wrench.next_to(g02x6,RIGHT)))
+        self.add(g02x7.arrange(DOWN).next_to(g02x6,DOWN,buff=2.0))
+        self.play(Create(s02x6_rec.next_to(g02x7,RIGHT)))
         self.wait(1)
         self.clear()
 
