@@ -480,12 +480,40 @@ class Reliability(Scene):
 
         self.add(t10x1)
         self.play(AnimationGroup(*[FadeIn(s) for s in g10x1],lag_ratio=1))
-        self.wait(5)
+        self.wait(2)
+        self.clear()
 
 
        #!Ambient system influences, look in script about silicon lifetime vs tempature
 
-        t08x1=(r"Decreaseing the reliability even more")
+        t11x1=(r"Considering the enviroment")
+
+        s11x1_be=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
+        s11x1_be.move_to(ORIGIN)
+
+        s11x2_heat=SVGMobject("graphics/heat.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*2+RIGHT*2)
+        s11x3_voltage=SVGMobject("graphics/voltage.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*2+LEFT*2)
+
+
+        s11x1_be.move_to(ORIGIN)
+
+        t11x1_hum=MathTex(r"rel.Humidity%")
+        t11x2_uv=MathTex(r"UV")
+        t11x3_temp=MathTex(r"Temp")
+        t11x4_U=MathTex(r"U(t)")
+        t11x5_oth=MathTex(r"...")
+
+        t11x6_form=MathTex(r"\lambda=\lambda_{ref}\cdot\pi_{temp}\cdot\pi_{humidity}\cdot\pi_{...}")
+        t11x6_form.move_to(DOWN*3)
+
+        self.add(s11x1_be)
+        self.wait(0.5)
+        self.add(s11x2_heat,s11x3_voltage)
+
+        self.add(t11x6_form)
+        self.wait(2)
+
+
 
 
 
