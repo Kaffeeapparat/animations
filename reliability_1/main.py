@@ -427,9 +427,10 @@ class Reliability(Scene):
         g07x4_axs=VGroup()
         for i in range(1,10,1):
             g07x4_axs.add(o07x2_axs.plot
-                      (lambda x: (exp(-5*x))**i,
-                            x_range=[0,1],
-                            color=Color(hue=i/10,saturation=1,luminance=0.5)
+                      (lambda x: ((exp(-5*x))**i),
+                            x_range=[0,1,0.001],
+                            color=Color(hue=i/10,saturation=1,luminance=0.5),
+                            use_smoothing=False,
                         )
                     )
 
