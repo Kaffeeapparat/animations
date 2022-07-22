@@ -469,20 +469,48 @@ class Reliability(Scene):
 
         o07x2_axs.move_to(DOWN*2+LEFT*4)
 
+        o10x5_fp=lambda x: ((x+1)**3)+x**2+x-3
+        def o10x4_fb(i):
+            return lambda x: 1-(1-exp(-5*x))**i
 
-        t10x2=[]
+
+        o10x2=[]
         g10x1=VGroup()
         for i in range(1,10,1):
-            g10x1.add(t10x1.plot
-                      (lambda x: 1-(1-exp(-5*x))**i,
-                            x_range=[0,1],
-                            color=Color(hue=i/10,saturation=1,luminance=0.5)
+            g10x1.add(o10x1.plot(o10x4_fb(i),
+                        x_range=[0,1],
+                        color=Color(hue=i/10,saturation=1,luminance=0.5)
                         )
                     )
 
-        self.add(t10x1)
+        o10x3=o10x1.plot(o10x5_fp,
+                   color=WHITE)
+        #self.add(o10x3)
+
+        self.add(o10x1)
         self.play(AnimationGroup(*[FadeIn(s) for s in g10x1],lag_ratio=1))
         self.wait(2)
+
+
+        t10x2=MathTex(r"r=0",r"r=1",r"r=2",r"r=3",r"r=4",r"r=5",r"r=6",r"r=7",r"r=8",font_size=20)
+        g10x3=VGroup()
+        h10x1=[0.05,0.075,0.15,0.25,0.35,0.45,0.55,0.65,0.75]
+        for i in range(0,9,1):
+            g10x3.add(Rectangle(height=0.5,width=1,fill_color=LIGHT_BROWN,color=YELLOW,fill_opacity=1).move_to(o10x1.c2p(h10x1[i],
+                                (o10x4_fb(i+1)(h10x1[i]))
+                                ))
+                        )
+            g10x3.add(t10x2[i].move_to(o10x1.c2p(h10x1[i],
+                                (o10x4_fb(i+1)(h10x1[i]))
+                                )))
+
+        self.add(g10x3)
+        self.wait(1)
+
+        o10x6=Line(o10x1.c2p(0.2,0),o10x1.c2p(0.2,2)).set_color(YELLOW_B)
+        self.add(o10x6)
+        self.wait(1)
+
         self.clear()
 
 
