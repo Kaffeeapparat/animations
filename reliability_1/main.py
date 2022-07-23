@@ -33,27 +33,24 @@ class Reliability(Scene):
 
         #!What is relaiability exactly
 
-        s01x1_hdd=SVGMobject("graphics/harddrive.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).rotate(120)
-
-        t01x1=Tex(r"What is reliability?",font_size=60)
-
-        t01x2_hdd=Tex(r"MTBF\\4 million hours",font_size=23).rotate(120)
-        t01x4=Tex(r"MTTF").rotate(-23)
-        t01x5=Tex(r"MTTR").rotate(56)
-        t01x6=Tex(r"Seems to never break")
-        t01x7=Tex(r"Just needs new Caps")
-
-        g01x1_title= VGroup(t01x1,t01x2_hdd).arrange(DOWN, buff=1)
-        g01x1_title.move_to(UP*1.5)
-
-        g01x2_hdd=VGroup(t01x2_hdd,s01x1_hdd).arrange(DOWN).move_to(DOWN*2+RIGHT*5)
-
-        g01x3_fadeout=(FadeOut(g01x1_title,shift=UP))
+        s01x1_hdd=SVGMobject("graphics/harddrive.svg",fill_opacity=1.0).to_corner(LEFT)
 
 
-        self.add(g01x1_title,g01x2_hdd)
-        self.wait(1)
-        self.play(g01x3_fadeout)
+
+        t01x1=Tex(r"What is reliability?",font_size=80).move_to(ORIGIN)
+        t01x2_hdd=Tex(r"HDD MTTF\\1 million hours!!!",font_size=30).rotate(PI*-0.1)
+        g01x2_hdd=VGroup(s01x1_hdd,t01x2_hdd).arrange(UP, buff=0.1).move_to(DOWN*2+RIGHT*5)
+
+        t01x4=Tex(r"MTTF?\\MTTR???\\ A????",font_size=50).rotate(PI*0.15).move_to(DOWN*2.5+LEFT*2)
+        t01x5=Tex(r"Higer V through\\backup Powersupply",font_size=40).rotate(-PI*0.2).move_to(UP*2+RIGHT*5)
+        t01x6=Tex(r"Electronics\\seem to never break!",font_size=40).rotate(PI*0.3).move_to(LEFT*5)
+        t01x7=Tex(r"High redundancy and high availability!!!",font_size=33).rotate(-PI*0.1).move_to(UP*2+LEFT*1)
+
+        g01x1_title=VGroup(t01x4,g01x2_hdd,t01x5,t01x6,t01x7)
+
+
+        self.play(Create(t01x1))
+        self.play(AnimationGroup(*[FadeIn(s) for s in g01x1_title],lag_ratio=0.5))
         self.wait(1)
         self.clear()
 
