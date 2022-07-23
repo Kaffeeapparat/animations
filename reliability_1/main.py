@@ -105,9 +105,12 @@ class Reliability(Scene):
 
         #Showing the Din Symbol of a resistor and merging iot into different Symbols
 
-        g02x4_bematrix=VGroup(*[SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.06) for s in range(0,100)])
-        g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
-        self.play(ReplacementTransform(s02x1_be,g02x4_bematrix))
+        g02x4_bematrix=VGroup(
+            *[SVGMobject("graphics/device.svg",
+                         stroke_color=Color("green"),
+                         fill_color=WHITE,
+                         fill_opacity=1.0
+                         ).to_corner(LEFT).scale(0.06) for s in range(0,100)])
 
         #self.play(AnimationGroup(*[Create(s) for s in g02x4_bematrix  ],lag_ratio=0.1))
         self.wait(1)
@@ -118,10 +121,24 @@ class Reliability(Scene):
         t02x5_ratec=MathTex(r"\lambda\approx\frac{\Delta n}{n\Delta t}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
 
         #g02x5_rate=VGroup(t02x4_ratep,t02x5_ratec)
+
+        self.wait(1)
+
+
+
+        v02x01_dn=ValueTracker(0)
+        g02x4_bematrix.add_updater(lambda x: setMatrixColor(x,v02x01_dn.get_value()))
+
+        g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
+        self.play(ReplacementTransform(s02x1_be,g02x4_bematrix))
+
+        self.add(v02x01_dn)
         self.play(Create(t02x4_ratep))
         self.wait(1)
-        self.play(ReplacementTransform(t02x4_ratep,t02x5_ratec))
-        self.wait(1)
+        self.play(ReplacementTransform(
+            t02x4_ratep,
+            t02x5_ratec)
+        )
 
         o02x01_n=DecimalNumber(
             100,
@@ -130,26 +147,39 @@ class Reliability(Scene):
             include_sign=True,
         )
 
-        o02x02_dn=DecimalNumber(
-            0,
+        o02x02_dn=(DecimalNumber(
+            0.00000001,
             show_ellipsis=True,
             num_decimal_places=3,
             include_sign=True,
-        )
+        ))
 
         o02x03_dt=DecimalNumber(
-            0,
+            1,
             show_ellipsis=True,
             num_decimal_places=3,
             include_sign=True,
         )
 
-        o02x04_rate=DecimalNumber(
-            0,
+
+
+        o02x04_lambda=DecimalNumber(
+            o02x01_n.get_value()/o02x02_dn.get_value()*o02x03_dt.get_value(),
             show_ellipsis=True,
             num_decimal_places=3,
             include_sign=True,
-        )
+            )
+
+
+        o02x02_dn.add_updater(lambda x: x.set_value(getMatrixGreenN(g02x4_bematrix)))
+        o02x04_lambda.add_updater(lambda x: x.set_value(o02x01_n.get_value()/o02x02_dn.get_value()*o02x03_dt.get_value()))
+
+        self.add(VGroup(o02x01_n,o02x02_dn,o02x03_dt,o02x04_lambda).arrange(DOWN).to_corner(DOWN,LEFT))
+
+        self.play(v02x01_dn.animate.set_value(99))
+
+        self.wait(1)
+
 
         #showing rate of 1 and others
         g02x5_bematback=g02x4_bematrix
@@ -543,6 +573,22 @@ class Reliability(Scene):
         self.wait(2)
 
 
+def getMatrixGreenN(resgroup):
+    x=0
+    gr=Color("green")
+    for i in range(0,100):
+        if(resgroup[i].get_stroke_color()==gr):
+            x=x+1
+    if x==0:
+        return 0.001
+    return x
+
+def setMatrixColor(bematrix,trackervalue):
+    for i in range(0,100):
+        if (i < trackervalue):
+                bematrix[i].set(stroke_color=Color("green"))
+        if (i >= trackervalue):
+                bematrix[i].set(stroke_color=Color("white"))
 
 
 
