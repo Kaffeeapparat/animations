@@ -120,8 +120,8 @@ class Definition(Scene):
 
         #!Calculating lambda
 
-        t02x4_ratep=MathTex(r"\text{rate of failure}\approx\frac{ \text{failed devices} }{ \text{number of devices}\times\text{time difference} }")
-        t02x5_ratec=MathTex(r"\lambda\approx\frac{\Delta n}{n\Delta t}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
+        t02x4_ratep=MathTex(r"\text{rate of failure}",r"\approx\frac{ \text{failed devices} }{ \text{number of devices}\cdot\text{time difference} }")
+        t02x5_ratec=MathTex(r"\lambda\phantom{texttexttext}",r"\approx",r"\frac{\Delta n }{\phantom{\text{text}}n\phantom{te}\cdot \phantom{te}\Delta  t\phantom{texttext}}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
 
         #g02x5_rate=VGroup(t02x4_ratep,t02x5_ratec)
 
@@ -130,59 +130,82 @@ class Definition(Scene):
 
 
         v02x01_dn=ValueTracker(0)
+        v02x02_dt=ValueTracker(1)
         g02x4_bematrix.add_updater(lambda x: setMatrixColor(x,v02x01_dn.get_value()))
 
         g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
         self.play(ReplacementTransform(s02x1_be,g02x4_bematrix))
 
         self.add(v02x01_dn)
+        self.add(v02x02_dt)
         self.play(Create(t02x4_ratep))
         self.wait(1)
         self.play(ReplacementTransform(
             t02x4_ratep,
             t02x5_ratec)
         )
+        self.play(FadeOut(t02x5_ratec[3]))
 
         o02x01_n=DecimalNumber(
             100,
-            show_ellipsis=True,
-            num_decimal_places=3,
-            include_sign=True,
+            show_ellipsis=False,
+            num_decimal_places=0,
+            include_sign=False,
         )
 
         o02x02_dn=(DecimalNumber(
-            0.00000001,
-            show_ellipsis=True,
-            num_decimal_places=3,
-            include_sign=True,
+            v02x01_dn.get_value(),
+            show_ellipsis=False,
+            num_decimal_places=0,
+            include_sign=False,
         ))
 
         o02x03_dt=DecimalNumber(
-            1,
-            show_ellipsis=True,
-            num_decimal_places=3,
-            include_sign=True,
+            v02x02_dt.get_value(),
+            show_ellipsis=False,
+            num_decimal_places=0,
+            include_sign=False,
         )
 
 
 
         o02x04_lambda=DecimalNumber(
             o02x01_n.get_value()/o02x02_dn.get_value()*o02x03_dt.get_value(),
-            show_ellipsis=True,
-            num_decimal_places=3,
-            include_sign=True,
+            show_ellipsis=False,
+            num_decimal_places=9,
+            include_sign=False,
             )
 
 
         o02x02_dn.add_updater(lambda x: x.set_value(getMatrixGreenN(g02x4_bematrix)))
-        o02x04_lambda.add_updater(lambda x: x.set_value(o02x01_n.get_value()/o02x02_dn.get_value()*o02x03_dt.get_value()))
+        o02x03_dt.add_updater(lambda x: x.set_value(v02x02_dt.get_value()))
+        o02x04_lambda.add_updater(lambda x: x.set_value(o02x01_n.get_value()/(o02x02_dn.get_value()*o02x03_dt.get_value())))
 
-        self.add(VGroup(o02x01_n,o02x02_dn,o02x03_dt,o02x04_lambda).arrange(DOWN).to_corner(DOWN,LEFT))
+        #self.add(index_labels(t02x5_ratec[0]))
+        self.play(ShrinkToCenter(t02x5_ratec[0]),FadeIn(o02x04_lambda.move_to(t02x5_ratec[0].get_center())))
+
+        self.play(ShrinkToCenter(t02x5_ratec[2][0:2]),FadeIn(o02x02_dn.move_to(t02x5_ratec[2][0:2].get_center())))
+
+        o02x01_n.move_to(t02x5_ratec[2][3:4].get_center()+UP*0.05)
+        self.play(ShrinkToCenter(t02x5_ratec[2][3:4]),FadeIn(o02x01_n.move_to(t02x5_ratec[2][3:4].get_center()+UP*0.05)))
+
+        self.play(ShrinkToCenter(t02x5_ratec[2][5:7]),FadeIn(o02x03_dt.move_to(t02x5_ratec[2][5:7].get_center())))
+
+        #self.add(VGroup(o02x01_n,o02x02_dn,o02x03_dt).arrange(DOWN).to_corner(DOWN,LEFT))
 
         self.play(v02x01_dn.animate.set_value(99))
+        self.wait(10)
+        self.play(v02x02_dt.animate.set_value(10000000))
+        self.wait(10)
+        self.play(v02x01_dn.animate.set_value(50))
 
         self.wait(1)
+        self.clear()
 
+        t02x9=MathTex(r"\text{Electronics are extremly reliable}",r"[\lambda]= 1 FIT = 1\cdot10^{-9}h^{-1}").arrange(DOWN)
+
+        self.add(t02x9)
+        self.wait(1)
 
         #showing rate of 1 and others
         g02x5_bematback=g02x4_bematrix
@@ -207,7 +230,6 @@ class Definition(Scene):
         self.play(Create(s02x6_rec.next_to(g02x7,RIGHT)))
         self.wait(1)
         self.clear()
-
 
 class Bathtub(Scene):
     def construct(self):
