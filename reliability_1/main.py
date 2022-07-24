@@ -28,7 +28,7 @@ config.quality='medium_quality'
 #identifyer for understanding
 
 
-class Reliability(Scene):
+class Intro(Scene):
     def construct(self):
 
         #!What is relaiability exactly
@@ -57,6 +57,9 @@ class Reliability(Scene):
         #!On different elctronic devices like Harddrives are printed some numbers
 
         #!Will it really run 4 million hours, and why does it seem that modern car break down more regularly
+
+class Definition(Scene):
+    def construct(self):
 
         #!First define the device that gets observed
 
@@ -206,6 +209,8 @@ class Reliability(Scene):
         self.clear()
 
 
+class Bathtub(Scene):
+    def construct(self):
 
         #!Bathtub curve
         t03x1=Tex(r"Typical failure distribution of electronic systems")
@@ -298,6 +303,9 @@ class Reliability(Scene):
 
         #!Distingushing the important part of the Bathtub and the nonimportant part of the bathtub
 
+class RandomFail(Scene):
+    def construct(self):
+
         t04x1_Rt=MathTex(r"R\left(t\right)=",r"e",r"^{-t",r"\lambda}")
         t04x2_Ft=MathTex(r"F\left(t\right)=1-R\left(t\right)")
         g04x1_f=VGroup(t04x1_Rt,t04x2_Ft).arrange(DOWN).move_to(UP*2+RIGHT*2)
@@ -360,7 +368,8 @@ class Reliability(Scene):
         self.wait(1)
         self.clear()
 
-
+class Headlightexample(Scene):
+    def construct(self):
         #!Modeling some examples, headlights for example
 
         t05x1=Tex(r"For example headlights")
@@ -369,6 +378,8 @@ class Reliability(Scene):
 
         t06x1=Tex(r"MTTR")
 
+class Serialparallel(Scene):
+    def construct(self):
         #!In Real world systems are build out of many parts. They influence the reliability, too.
 
 
@@ -484,6 +495,8 @@ class Reliability(Scene):
         #Big Axes that shows the effect on adding multiple devices in parallel on MTBF
 
         t10x1=(r"Reliability of parallel systems visualised")
+class Economics(Scene):
+    def construct(self):
 
 
         t10x1=Axes(tips=False,
@@ -541,8 +554,10 @@ class Reliability(Scene):
         self.clear()
 
 
-       #!Ambient system influences, look in script about silicon lifetime vs tempature
+        #!Ambient system influences, look in script about silicon lifetime vs tempature
 
+class enviroment(Scene):
+    def construct(self):
         t11x1=(r"Considering the enviroment")
 
         s11x1_be=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
@@ -571,6 +586,10 @@ class Reliability(Scene):
 
         self.add(t11x6_form)
         self.wait(2)
+
+class availability(Scene):
+    def construct(self):
+        #! Explaining availability
 
 
 def getMatrixGreenN(resgroup):
