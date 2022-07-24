@@ -2,8 +2,8 @@ from manim import *
 from numpy import *
 from colour import Color
 
-config.background_color= DARK_GREY
-config.quality='medium_quality'
+config.background_color= DARKER_GREY
+config.quality='low_quality'
 
 #Naming convention for text and objects
 # xOOxO_y...y
