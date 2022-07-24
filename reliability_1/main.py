@@ -37,7 +37,7 @@ class Intro(Scene):
 
 
 
-        t01x1=Tex(r"What is reliability?",font_size=80).move_to(ORIGIN)
+        t01x1=Tex(r"Uncovering th mystery\\of reliability",font_size=80).move_to(ORIGIN)
         t01x2_hdd=Tex(r"HDD MTTF\\1 million hours!!!",font_size=30).rotate(PI*-0.1)
         g01x2_hdd=VGroup(s01x1_hdd,t01x2_hdd).arrange(UP, buff=0.1).move_to(DOWN*2+RIGHT*5)
 
@@ -440,19 +440,19 @@ class Serialparallel(Scene):
 
         t07x2=Tex(r"Serial systems").move_to(UP*3+RIGHT*4)
 
-        s07x1_beh=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.1).rotate(90)
+        s07x1_beh=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.2)
 
-        s07x2_bev=SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5)
+        s07x2_bev=SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).rotate(PI*0.5).scale(0.3)
 
-        t07x3_cont=MathTex(r"    ...    ")
-        t07x4_cont=MathTex(r"    ...    ")
+        t07x3_cont=MathTex(r"      ...      ")
+        t07x4_cont=MathTex(r"      ...      ")
 
         g07x1_ser=VGroup()
 
         #!Decrease reliability with serial systems
 
         for i in range(0,2):
-            g07x1_ser.add(SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.1))
+            g07x1_ser.add(SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.2))
 
         g07x1_ser.add(t07x3_cont,s07x1_beh)
         g07x1_ser.arrange(RIGHT,buff=0.01).move_to(UP*1.5+RIGHT*4)
@@ -461,10 +461,10 @@ class Serialparallel(Scene):
 
         g07x2_par=VGroup()
 
-        for i in range(0,2):
-            g07x2_par.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.1).rotate(90))
+        for i in range(0,4):
+            g07x2_par.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).rotate(PI*0.5).scale(0.3))
 
-        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=0.01).move_to(UP*1.5+LEFT*4)
+        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=0.006).move_to(UP*1.5+LEFT*4)
 
         self.add(t07x1,t07x2,g07x1_ser,g07x2_par)
         self.wait(1)
@@ -626,38 +626,40 @@ class Economics(Scene):
 
         #!Ambient system influences, look in script about silicon lifetime vs tempature
 
-class enviroment(Scene):
+class Enviroment(Scene):
     def construct(self):
         t11x1=(r"Considering the enviroment")
 
         s11x1_be=SVGMobject("graphics/device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).scale(0.5)
         s11x1_be.move_to(ORIGIN)
 
-        s11x2_heat=SVGMobject("graphics/heat.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*2+RIGHT*2)
-        s11x3_voltage=SVGMobject("graphics/voltage.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*2+LEFT*2)
+        s11x2_heat=SVGMobject("graphics/heat.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*3+RIGHT*3)
+        s11x3_voltage=SVGMobject("graphics/voltage.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).scale(0.5).next_to(s11x1_be,UP*3+LEFT*3)
 
-        a11x1_heat=Arrow().put_start_and_end_on(s11x2_heat.get_center(),s11x1_be.get_center()).scale(0.2)
-        a11x2_temp=Arrow().put_start_and_end_on(s11x3_voltage.get_center(),s11x1_be.get_center()).scale(0.2)
+        a11x1_heat=Arrow().put_start_and_end_on(s11x2_heat.get_center(),s11x1_be.get_center()).scale(0.3)
+        a11x2_temp=Arrow().put_start_and_end_on(s11x3_voltage.get_center(),s11x1_be.get_center()).scale(0.3)
 
         t11x1_hum=MathTex(r"rel.Humidity%")
         t11x2_uv=MathTex(r"UV")
         t11x3_temp=MathTex(r"Temp")
         t11x4_U=MathTex(r"U(t)")
-        t11x5_oth=MathTex(r"...")
+        t11x5_oth=MathTex(r"...").next_to(s11x1_be,UP*5)
+
+        a11x3_punkt=Arrow().put_start_and_end_on(t11x5_oth.get_center(),s11x1_be.get_center()).scale(0.3)
 
         t11x6_form=MathTex(r"\lambda=\lambda_{ref}\cdot\pi_{temp}\cdot\pi_{humidity}\cdot\pi_{...}")
         t11x6_form.move_to(DOWN*3)
 
         self.add(s11x1_be)
         self.wait(0.5)
-        self.add(s11x2_heat,s11x3_voltage)
+        self.add(s11x2_heat,s11x3_voltage,t11x5_oth)
         self.wait(0.5)
-        self.add(a11x1_heat,a11x2_temp)
-
+        self.add(a11x1_heat,a11x2_temp,a11x3_punkt)
         self.add(t11x6_form)
         self.wait(2)
+        self.clear()
 
-class availability(Scene):
+class Availability(Scene):
     def construct(self):
         #! Explaining availability
 
