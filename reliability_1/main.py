@@ -613,6 +613,36 @@ class availability(Scene):
     def construct(self):
         #! Explaining availability
 
+        s12x1_lampwork=SVGMobject("graphics/lamp_on.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
+        s12x2_lampnowork=SVGMobject("graphics/lamp_off.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
+        s12x3_bulbwork=SVGMobject("graphics/lightbulb_on.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
+        s12x4_bulbnwork=SVGMobject("graphics/lightbulb_off.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
+
+        s12x1_lampwork.move_to(LEFT*2)
+        s12x2_lampnowork.move_to(s12x1_lampwork.get_center()+LEFT*0.2)
+        g12x2=VGroup(s12x1_lampwork,s12x2_lampnowork).to_corner(LEFT+UP)
+
+        self.play(Create(s12x2_lampnowork))
+        self.wait(1)
+        self.play(FadeIn(s12x1_lampwork))
+        self.wait(1)
+        self.play(FadeOut(s12x1_lampwork))
+        self.wait(1)
+
+        t12x1=MathTex(r"How high is the availability\\of the system lamp?")
+
+        t12x2=MathTex(r"\text{V}=text{MTBR}/text{MTTR}\cdot\text{MTTB}")
+
+        t12x3=MathTex(r"MTTR_{change lightbulb}=2h")
+        t12x4=MathTex(r"MTBF_{lightbulb}=1000h^{-1}")
+        t12x4=MathTex(r"MTBF_{lightbulb}=1000h^{-1}")
+        t12x5=MathTex(r"n_{repairs}=5")
+        self.wait(1)
+
+        g12x1_f=VGroup(t12x3,t12x4,t12x5).arrange(DOWN).move_to(RIGHT*2)
+        self.play(FadeIn(g12x1_f))
+        self.wait(1)
+
 
 def getMatrixGreenN(resgroup):
     x=0
