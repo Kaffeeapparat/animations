@@ -354,11 +354,16 @@ class RandomFail(Scene):
         t04x1_Rt=MathTex(r"R\left(t\right)=",r"e",r"^{-t",r"\lambda}")
         t04x2_Ft=MathTex(r"F\left(t\right)=1-R\left(t\right)")
         g04x1_f=VGroup(t04x1_Rt,t04x2_Ft).arrange(DOWN).move_to(UP*2+RIGHT*2)
-        t04x3_poi=MathTex(r"\frac{1}{\text{MTBF}}",font_size=25)
+        t04x3_poi=MathTex(r"\text{MTBF}",font_size=40)
         t04x4_ylb=Tex(r"R(t)",r"F(t)")
         t04x4_ylb.arrange(DOWN)
         t04x4_ylb[0].set_color(YELLOW_C)
         t04x4_ylb[1].set_color(ORANGE)
+
+        t04x5_val=MathTex(r"0.63",r"0.37")
+        t04x5_val.arrange(DOWN)
+        t04x5_val[0].set_color(ORANGE)
+        t04x5_val[1].set_color(YELLOW_C)
 
         o04x1=Axes(x_range=[0,3,1],
                     y_range=[0, 1.5, 1],
@@ -387,7 +392,7 @@ class RandomFail(Scene):
 
         g04x1_initstart=VGroup(o04x1,o04x5_rt,o04x4_xlb)
 
-        self.play(ReplacementTransform(g03x2_finallineup,g04x1_initstart))
+        self.play(Create(g04x1_initstart))
         self.wait(1)
         self.wait(1)
         #self.play()
@@ -402,6 +407,8 @@ class RandomFail(Scene):
         o04x7=Line(o04x1.c2p(1,0),o04x1.c2p(1,0.37)).set_color(YELLOW_B)
         o04x8=Line(o04x1.c2p(1,0.37),o04x1.c2p(1,0.63)).set_color(RED_B)
 
+        t04x5_val.next_to(o04x8,RIGHT)
+
         self.add(o04x7,t04x3_poi.next_to(o04x1.c2p(1,0),DOWN))
         self.play(Create(g04x1_f[0]))
         self.wait(1)
@@ -409,6 +416,7 @@ class RandomFail(Scene):
         self.add(o04x8)
         self.play(Create(g04x1_f[1]))
         self.add(t04x4_ylb.next_to(o04x4_ylb,RIGHT))
+        self.add(t04x5_val)
 
         self.wait(1)
         self.clear()
