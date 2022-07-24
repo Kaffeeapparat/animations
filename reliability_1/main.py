@@ -279,20 +279,37 @@ class Bathtub(Scene):
         o03x4=o03x1.plot(lambda x:np.exp(x-3)-0.3,
                                 x_range=[2,3],
                                 use_smoothing=False
-                                )
+                            )
+
+        o03x8=o03x1.plot(lambda x:np.exp(-x),
+                                x_range=[0,1],
+                                use_smoothing=False,
+                                color=RED
+                            )
+
+        o03x9=o03x1.plot(lambda x:np.exp(x-2),
+                                x_range=[1,2],
+                                use_smoothing=False,
+                                color=RED
+                            )
+
+
 
         g03x5_bathtub=VGroup(o03x2,o03x3,o03x4)
+        g03x6_mechtub=VGroup(o03x8,o03x9)
 
         o03x5=Brace(o03x3)
         o03x6=Brace(o03x2)
         o03x7=Brace(o03x4)
-        t05x4=Tex(r"early\\failures")
-        t05x5=Tex(r"random\\failures")
-        t05x6=Tex(r"wearout\\failures")
+        t03x4=Tex(r"early\\failures")
+        t03x5=Tex(r"random\\failures")
+        t03x6=Tex(r"wearout\\failures")
+        t03x7=Tex(r"mechanical\\systems")
 
-        g03x1_ef=VGroup(o03x5,t05x4).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
-        g03x2_rf=VGroup(o03x6,t05x5).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
-        g03x3_wf=VGroup(o03x7,t05x6).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
+        g03x1_ef=VGroup(o03x5,t03x4).arrange(DOWN,buff=0.5).next_to(o03x2,DOWN)
+        g03x2_rf=VGroup(o03x6,t03x5).arrange(DOWN,buff=0.5).next_to(o03x3,DOWN)
+        g03x3_wf=VGroup(o03x7,t03x6).arrange(DOWN,buff=0.5).next_to(o03x4,DOWN*1.09)
+        t03x7.next_to(o03x8,buff=-1.1)
 
 
         #!"Electronic devices fail with following distribution", early, random and wearout failures
@@ -315,6 +332,12 @@ class Bathtub(Scene):
         self.wait(1)
         self.play(o03x3.animate.set_color(YELLOW_C))
         self.play(FadeIn(g03x2_rf))
+
+        self.wait(1)
+        self.play(Create(g03x6_mechtub))
+        self.play(FadeIn(t03x7))
+        self.wait(1)
+        self.clear()
 
         g03x2_finallineup=VGroup(o03x1,g03x1_ef,g03x2_rf,g03x3_wf,g03x4_labels,g03x5_bathtub,)
 
