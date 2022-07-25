@@ -27,6 +27,16 @@ config.quality='low_quality'
 #string y...y
 #identifyer for understanding
 
+class complete(Scene):
+    def construct(self):
+        Intro.construct(self)
+        Definition.construct(self)
+        Bathtub.construct(self)
+        RandomFail.construct(self)
+        Serialparallel.construct(self)
+        Economics.construct(self)
+        Enviroment.construct(self)
+        Availability.construct(self)
 
 class Intro(Scene):
     def construct(self):
