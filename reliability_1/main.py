@@ -76,7 +76,7 @@ class Definition(Scene):
         t02x1=Tex(r"Definition: A device that runs and fails")
 
         t02x2=Tex(r"State of the Device:")
-        t02x3=Tex(r"functioning",r"defect",font_size=50).arrange(DOWN)
+        t02x3=Tex(r"defect",r"functioning",font_size=50).arrange(DOWN)
         g02x3_bestate=VGroup(t02x2,t02x3).arrange(DOWN)
 
         #tex.animate.set_color(RED),
@@ -108,9 +108,9 @@ class Definition(Scene):
         self.play(Create(g02x3_bestate))
         self.wait(1)
 
-        self.play(g02x3_bestate[1][1].animate.set_color(RED),o01x1.animate.set_color(RED))
+        self.play(g02x3_bestate[1][0].animate.set_color(RED),o01x1.animate.set_color(RED))
         self.wait(1)
-        self.play(g02x3_bestate[1][0].animate.set_color(GREEN),o01x1.animate.set_color(GREEN))
+        self.play(g02x3_bestate[1][1].animate.set_color(GREEN),o01x1.animate.set_color(GREEN))
         self.wait(1)
         self.clear()
 
@@ -121,9 +121,11 @@ class Definition(Scene):
         g02x4_bematrix=VGroup(
             *[SVGMobject("graphics/device.svg",
                          stroke_color=Color("green"),
-                         fill_color=WHITE,
                          fill_opacity=1.0
                          ).to_corner(LEFT).scale(0.06) for s in range(0,100)])
+        for i in range(0,100):
+            if i < 51:
+                g02x4_bematrix[i].set(stroke_color=Color("red"))
 
         #self.play(AnimationGroup(*[Create(s) for s in g02x4_bematrix  ],lag_ratio=0.1))
         self.wait(1)
@@ -131,7 +133,7 @@ class Definition(Scene):
         #!Calculating lambda
 
         t02x4_ratep=MathTex(r"\text{rate of failure}",r"\approx\frac{ \text{failed devices} }{ \text{number of devices}\cdot\text{time difference} }")
-        t02x5_ratec=MathTex(r"\lambda\phantom{texttexttext}",r"\approx",r"\frac{\Delta n }{\phantom{\text{text}}n\phantom{te}\cdot \phantom{te}\Delta  t\phantom{texttext}}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
+        t02x5_ratec=MathTex(r"\lambda\phantom{ }",r"\approx",r"\frac{\Delta n }{\phantom{\text{txt}}n\phantom{te}\cdot \phantom{tetext}\Delta  t\phantom{text}}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
 
         #g02x5_rate=VGroup(t02x4_ratep,t02x5_ratec)
 
@@ -139,8 +141,8 @@ class Definition(Scene):
 
 
 
-        v02x01_dn=ValueTracker(0)
-        v02x02_dt=ValueTracker(1)
+        v02x01_dn=ValueTracker(50)
+        v02x02_dt=ValueTracker(1000000000)
         g02x4_bematrix.add_updater(lambda x: setMatrixColor(x,v02x01_dn.get_value()))
 
         g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
@@ -154,7 +156,12 @@ class Definition(Scene):
             t02x4_ratep,
             t02x5_ratec)
         )
+        o02x05_origindot=Dot()
         self.play(FadeOut(t02x5_ratec[3]))
+        g02x8=VGroup(t02x5_ratec[0],t02x5_ratec[1],t02x5_ratec[2])
+        g02x8.generate_target()
+        g02x8.target.shift(RIGHT*3.5)
+        self.play(MoveToTarget(g02x8))
 
         o02x01_n=DecimalNumber(
             100,
@@ -180,7 +187,7 @@ class Definition(Scene):
 
 
         o02x04_lambda=DecimalNumber(
-            o02x01_n.get_value()/o02x02_dn.get_value()*o02x03_dt.get_value(),
+            100/o02x02_dn.get_value()*o02x03_dt.get_value(),
             show_ellipsis=False,
             num_decimal_places=9,
             include_sign=False,
@@ -189,7 +196,7 @@ class Definition(Scene):
 
         o02x02_dn.add_updater(lambda x: x.set_value(getMatrixGreenN(g02x4_bematrix)))
         o02x03_dt.add_updater(lambda x: x.set_value(v02x02_dt.get_value()))
-        o02x04_lambda.add_updater(lambda x: x.set_value(o02x01_n.get_value()/(o02x02_dn.get_value()*o02x03_dt.get_value())))
+        o02x04_lambda.add_updater(lambda x: x.set_value(100/(o02x02_dn.get_value()*o02x03_dt.get_value())))
 
         #self.add(index_labels(t02x5_ratec[0]))
         self.play(ShrinkToCenter(t02x5_ratec[0]),FadeIn(o02x04_lambda.move_to(t02x5_ratec[0].get_center())))
@@ -197,24 +204,31 @@ class Definition(Scene):
         self.play(ShrinkToCenter(t02x5_ratec[2][0:2]),FadeIn(o02x02_dn.move_to(t02x5_ratec[2][0:2].get_center())))
 
         o02x01_n.move_to(t02x5_ratec[2][3:4].get_center()+UP*0.05)
-        self.play(ShrinkToCenter(t02x5_ratec[2][3:4]),FadeIn(o02x01_n.move_to(t02x5_ratec[2][3:4].get_center()+UP*0.05)))
+        self.play(ShrinkToCenter(t02x5_ratec[2][3:4]),FadeIn(o02x01_n.move_to(t02x5_ratec[2][3:4].get_center()+UP*0.11)))
 
         self.play(ShrinkToCenter(t02x5_ratec[2][5:7]),FadeIn(o02x03_dt.move_to(t02x5_ratec[2][5:7].get_center())))
 
         #self.add(VGroup(o02x01_n,o02x02_dn,o02x03_dt).arrange(DOWN).to_corner(DOWN,LEFT))
 
         self.play(v02x01_dn.animate.set_value(99))
-        self.wait(10)
-        self.play(v02x02_dt.animate.set_value(10000000))
-        self.wait(10)
+        self.wait(2)
+        self.play(v02x01_dn.animate.set_value(2))
+        self.wait(2)
         self.play(v02x01_dn.animate.set_value(50))
+        self.wait(2)
+        self.play(v02x02_dt.animate.set_value(50000000))
+        self.wait(2)
+        self.play(v02x01_dn.animate.set_value(99))
+        self.wait(2)
+        self.play(v02x01_dn.animate.set_value(70))
+        self.wait(2)
 
-        self.wait(1)
-        self.clear()
+        g02x9=VGroup(g02x4_bematrix)
 
         t02x9=MathTex(r"\text{Electronics are extremly reliable}",r"[\lambda]= 1 FIT = 1\cdot10^{-9}h^{-1}").arrange(DOWN)
 
-        self.add(t02x9)
+
+        self.play(ReplacementTransform(g02x9,t02x9),FadeOut(o02x01_n,o02x02_dn,o02x03_dt,o02x04_lambda,t02x5_ratec[0],t02x5_ratec[1],t02x5_ratec[2]))
         self.wait(1)
 
         #showing rate of 1 and others
@@ -223,23 +237,25 @@ class Definition(Scene):
 
         #!Of course  it is only a statistical figure
 
-        t02x6=Tex(r"MTBF/MTTF").move_to(UP*3)
+        t02x6=MathTex(r"\text{MTTF,MTTR}=\frac{1}{\lambda}").move_to(UP*2)
         t02x8=Tex(r"MTBF:",r"Mean Time between failure",r"$\implies$repairable")
-        t02x7=Tex(r"MTTF:",r"Mean Time to failure",r"$\implies$unrepairable")
-
+        t02x7=Tex(r"MTTF:",r"Mean Time to failure",r"$\implies$unrepairable").move_to(DOWN*2)
         s02x5_wrench=SVGMobject("graphics/wrench.svg",stroke_color=GREEN,fill_color=GREEN,fill_opacity=1.0).scale(0.5)
         s02x6_rec=SVGMobject("graphics/recycle.svg",stroke_color=RED,fill_color=RED,fill_opacity=1.0).scale(0.5)
 
-        self.add(t02x6)
+        self.play(Create(t02x6))
+        self.wait(1)
 
         g02x6=VGroup(t02x7[0],t02x7[1])
         g02x7=VGroup(t02x8[0],t02x8[1])
-        self.add(g02x6.arrange(DOWN))
+        self.play(Create(g02x6.arrange(DOWN)))
+        self.wait(1)
         self.play(Create(s02x5_wrench.next_to(g02x6,RIGHT)))
-        self.add(g02x7.arrange(DOWN).next_to(g02x6,DOWN,buff=2.0))
+        self.wait(1)
+        self.play(Create(g02x7.arrange(DOWN).move_to(DOWN*2)))
+        self.wait(1)
         self.play(Create(s02x6_rec.next_to(g02x7,RIGHT)))
         self.wait(1)
-        self.clear()
 
 class Bathtub(Scene):
     def construct(self):
@@ -719,7 +735,7 @@ def setMatrixColor(bematrix,trackervalue):
         if (i < trackervalue):
                 bematrix[i].set(stroke_color=Color("green"))
         if (i >= trackervalue):
-                bematrix[i].set(stroke_color=Color("white"))
+                bematrix[i].set(stroke_color=Color("red"))
 
 
 
