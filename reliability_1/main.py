@@ -133,7 +133,8 @@ class Definition(Scene):
         #!Calculating lambda
 
         t02x4_ratep=MathTex(r"\text{rate of failure}",r"\approx\frac{ \text{failed devices} }{ \text{number of devices}\cdot\text{time difference} }")
-        t02x5_ratec=MathTex(r"\lambda\phantom{ }",r"\approx",r"\frac{\Delta n }{\phantom{\text{txt}}n\phantom{te}\cdot \phantom{tetext}\Delta  t\phantom{text}}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
+        t02x10_ratec=MathTex(r"\lambda\phantom{ }",r"\approx",r"\frac{\Delta n }{\phantom{\text{txt}}n\phantom{te}\cdot \phantom{tetext}\Delta t \phantom{text}}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
+        t02x5_ratec=MathTex(r"\lambda\phantom{ }",r"\approx",r"\frac{\Delta n }{\phantom{\text{txt}}n\phantom{te}\cdot \phantom{tetext}\Delta t \phantom{text}\phantom{te}h}",r"=\frac{1}{\text{MTBF}}=\frac{1}{\text{MTTF}}")
 
         #g02x5_rate=VGroup(t02x4_ratep,t02x5_ratec)
 
@@ -154,10 +155,10 @@ class Definition(Scene):
         self.wait(1)
         self.play(ReplacementTransform(
             t02x4_ratep,
-            t02x5_ratec)
+            t02x10_ratec)
         )
         o02x05_origindot=Dot()
-        self.play(FadeOut(t02x5_ratec[3]))
+        self.play(ReplacementTransform(t02x10_ratec,t02x5_ratec),FadeOut(t02x5_ratec[3]))
         g02x8=VGroup(t02x5_ratec[0],t02x5_ratec[1],t02x5_ratec[2])
         g02x8.generate_target()
         g02x8.target.shift(RIGHT*3.5)
