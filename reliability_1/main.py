@@ -693,35 +693,106 @@ class Availability(Scene):
     def construct(self):
         #! Explaining availability
 
+        t12x1=Tex(r"How high is the availability\\of the system lamp?").move_to(UP*3)
+        t12x2=MathTex(r"\text{A}=\frac{\text{MTBR}}{\text{MTBR}\cdot\text{MTTR}}")
+        t12x4=MathTex(r"MTTR_{changelightbulb}=2h",r"MTTR_{system}=HIGH",r"MTTR_{system}=LOW")
+        t12x3=MathTex(r"MTBF_{lightbulb}=1000h^{-1}",r"MTBF_{repair}=LOW")
+        t12x5=MathTex(r"MTBF_{}=1000h^{-1}")
+        t12x6=MathTex(r"0.998",r"=\frac{1000}{1000\cdot{2}")
+        t12x7=MathTex(r"0.002",r"=1- \frac{1000}{1000\cdot{2}")
+
+        t12x8=MathTex(r"\text{LOW}=\frac{\text{LOW}}{\text{LOW}\cdot\text{HIGH}}")
+        t12x9=MathTex(r"\text{HIGH}=\frac{\text{LOW}}{\text{LOW}\cdot\text{LOW}}")
+
         s12x1_lampwork=SVGMobject("graphics/lamp_on.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
         s12x2_lampnowork=SVGMobject("graphics/lamp_off.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
         s12x3_bulbwork=SVGMobject("graphics/lightbulb_on.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
         s12x4_bulbnwork=SVGMobject("graphics/lightbulb_off.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
+        s12x5_complexdevice=SVGMobject("graphics/complex_device.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0)
+
 
         s12x1_lampwork.move_to(LEFT*2)
-        s12x2_lampnowork.move_to(s12x1_lampwork.get_center()+LEFT*0.2)
-        g12x2=VGroup(s12x1_lampwork,s12x2_lampnowork).to_corner(LEFT+UP)
+        s12x2_lampnowork.move_to(s12x1_lampwork.get_center()+LEFT*0.2).set
+        g12x2=VGroup(s12x1_lampwork,s12x2_lampnowork)
 
         self.play(Create(s12x2_lampnowork))
         self.wait(1)
         self.play(FadeIn(s12x1_lampwork))
+        self.wait(0.5)
+        self.play(s12x1_lampwork.animate.set(stroke_color=GREEN))
         self.wait(1)
         self.play(FadeOut(s12x1_lampwork))
         self.wait(1)
-
-        t12x1=MathTex(r"How high is the availability\\of the system lamp?")
-
-        t12x2=MathTex(r"\text{V}=text{MTBR}/text{MTTR}\cdot\text{MTTB}")
-
-        t12x3=MathTex(r"MTTR_{change lightbulb}=2h")
-        t12x4=MathTex(r"MTBF_{lightbulb}=1000h^{-1}")
-        t12x4=MathTex(r"MTBF_{lightbulb}=1000h^{-1}")
-        t12x5=MathTex(r"n_{repairs}=5")
+        self.play(s12x2_lampnowork.animate.set(stroke_color=RED))
+        self.wait(1)
+        self.play(FadeIn(s12x1_lampwork),FadeOut(s12x2_lampnowork))
         self.wait(1)
 
-        g12x1_f=VGroup(t12x3,t12x4,t12x5).arrange(DOWN).move_to(RIGHT*2)
-        self.play(FadeIn(g12x1_f))
+        s12x2_lampnowork.set(color=WHITE)
+        self.play(g12x2.animate.to_corner(LEFT))
+        self.play(Create(t12x1))
         self.wait(1)
+
+
+        g12x1_f=VGroup(t12x2,t12x3[0],t12x4[0],t12x5).arrange(DOWN).move_to(RIGHT*2)
+        self.play(FadeIn(g12x1_f[0]))
+        self.wait(1)
+        #self.add(index_labels(t12x2[0]))
+        self.wait(2)
+        self.play(g12x1_f[0][0][2:6].animate.set(color=YELLOW),g12x1_f[0][0][7:11].animate.set(color=YELLOW))
+        self.wait(1)
+        self.play(FadeIn(g12x1_f[1]))
+        self.wait(1)
+
+        self.play(g12x1_f[0][0][1:6].animate.set(color=WHITE),g12x1_f[0][0][6:11].animate.set(color=WHITE))
+        self.play(g12x1_f[0][0][12:16].animate.set(color=YELLOW))
+        self.wait(1)
+        self.play(FadeIn(g12x1_f[2]))
+        self.wait(1)
+        self.play(g12x1_f[0][0][12:16].animate.set(color=WHITE))
+
+        self.play(FadeIn(g12x1_f[1:3]))
+        self.wait(1)
+
+        t12x6.move_to((g12x1_f [0].get_center()))
+        t12x7.move_to(t12x6.get_center())
+        self.play(ReplacementTransform(g12x1_f[0],t12x6))
+        self.wait(1)
+        self.play(s12x1_lampwork.animate.set(stroke_color=GREEN),s12x2_lampnowork.animate.set(stroke_color=GREEN),t12x6[0].animate.set(color=GREEN))
+        self.wait(1)
+        self.play(ReplacementTransform(t12x6,t12x7))
+        self.wait(0,5)
+        self.play(t12x7[0].animate.set(color=RED),s12x2_lampnowork.animate.set(stroke_color=RED),FadeOut(s12x1_lampwork))
+        self.wait(2)
+
+        t12x2=MathTex(r"\text{A}=\frac{\text{MTBR}}{\text{MTBR}\cdot\text{MTTR}}").move_to(g12x1_f[0].get_center())
+        self.play(ReplacementTransform(g12x2,s12x5_complexdevice.move_to(g12x2.get_center())),ReplacementTransform(t12x7,t12x2),FadeOut(t12x4[0]),FadeOut(t12x3[0]))
+
+        self.play(FadeIn(t12x4[1].move_to(t12x4[0].get_center())))
+        self.play(FadeIn(t12x3[1].move_to(t12x3[0].get_center())))
+        self.play(ReplacementTransform(t12x2,t12x8.move_to(t12x2.get_center())))
+        self.wait(1)
+
+        self.play(s12x5_complexdevice.animate.set(stroke_color=RED),t12x4[1][11:15].animate.set(color=RED))
+        self.add(index_labels(t12x4[1]))
+        self.wait(1)
+
+
+        #self.play(ReplacementTransform(t12x9))
+
+        self.play(FadeIn(t12x4[2].move_to(t12x4[0].get_center())),FadeOut(t12x4[1]))
+        #self.play(FadeIn(t12x3[1].move_to(t12x3[0].get_center())))
+        self.play(ReplacementTransform(t12x8,t12x9.move_to(t12x2.get_center())))
+        self.wait(1)
+
+        self.play(s12x5_complexdevice.animate.set(stroke_color=GREEN),t12x4[2][11:14].animate.set(color=GREEN))
+        #self.add(index_labels(t12x4[1]))
+        self.wait(1)
+        #self.play(FadeIn())
+
+        self.wait(1)
+
+
 
 
 def getMatrixGreenN(resgroup):
