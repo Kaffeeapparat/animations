@@ -946,6 +946,13 @@ class afterthoughts(Scene):
         self.add(t14x7)
         self.wait()
 
+class thumbnail(Scene):
+    def construct(self):
+
+        t15x1=Tex(r"Will your harddrives \\really run 2 million hours?",font_size=100,color=YELLOW,stroke_width=3).move_to(UP*1)
+        t15x2=Tex(r"A dive into the basics of reliability",color=YELLOW,stroke_width=3,font_size=70).move_to(DOWN*2)
+        self.add(t15x1,t15x2)
+        self.wait()
 
 def getMatrixGreenN(resgroup):
     x=0
