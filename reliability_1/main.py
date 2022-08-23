@@ -2,8 +2,8 @@ from manim import *
 from numpy import *
 from colour import Color
 
-config.background_color= DARKER_GREY
-config.quality='low_quality'
+config.background_color= BLACK
+config.quality='high_quality'
 
 #Naming convention for text and objects
 # xOOxO_y...y
@@ -45,7 +45,7 @@ class Intro(Scene):
 
         s01x1_hdd=SVGMobject("graphics/harddrive.svg",fill_opacity=1.0).to_corner(LEFT)
 
-        t01x1=Tex(r"Uncovering th mystery\\of reliability",font_size=80).move_to(ORIGIN)
+        t01x1=Tex(r"Understanding reliability",font_size=80).move_to(ORIGIN)
         t01x2_hdd=Tex(r"HDD MTTF\\1 million hours!!!",font_size=30).rotate(PI*-0.1)
         g01x2_hdd=VGroup(s01x1_hdd,t01x2_hdd).arrange(UP, buff=0.1).move_to(DOWN*2+RIGHT*5)
 
@@ -111,6 +111,7 @@ class Definition(Scene):
         for i in range(0,5,1):
             self.play(ReplacementTransform(o01x1,g02x2[i]))
             o01x1=g02x2[i]
+            self.wait(3)
 
 
 
@@ -119,11 +120,11 @@ class Definition(Scene):
         self.play(Create(g02x3_bestate))
         self.wait(1)
 
-        self.play(g02x3_bestate[1][0].animate.set_color(RED),o01x1.animate.set_color(RED))
-        self.wait(1)
         self.play(g02x3_bestate[1][1].animate.set_color(GREEN),o01x1.animate.set_color(GREEN))
         self.wait(1)
-        self.clear()
+        self.play(g02x3_bestate[1][0].animate.set_color(RED),o01x1.animate.set_color(RED))
+        self.wait(1)
+        self.play(FadeOut(g02x3_bestate))
 
         self.play(ReplacementTransform(o01x1,s02x1_be.move_to(ORIGIN).set_color(GREEN)))
 
@@ -158,16 +159,18 @@ class Definition(Scene):
         g02x4_bematrix.add_updater(lambda x: setMatrixColor(x,v02x01_dn.get_value()))
 
         g02x4_bematrix.arrange_in_grid(cols=20).move_to(UP*2.5+LEFT*0)
-        self.play(ReplacementTransform(s02x1_be,g02x4_bematrix))
+        self.play(ReplacementTransform(s02x1_be,g02x4_bematrix),FadeOut(t02x12))
 
         self.add(v02x01_dn)
         self.add(v02x02_dt)
+        self.wait(1)
         self.play(Create(t02x4_ratep))
         self.wait(1)
         self.play(ReplacementTransform(
             t02x4_ratep,
             t02x10_ratec)
         )
+        self.wait(1)
         o02x05_origindot=Dot()
         self.play(ReplacementTransform(t02x10_ratec,t02x5_ratec),FadeOut(t02x5_ratec[3]))
         self.wait(1)
@@ -249,13 +252,14 @@ class Definition(Scene):
 
         #showing rate of 1 and others
         g02x5_bematback=g02x4_bematrix
-        self.clear()
+        self.play(FadeOut(t02x9))
+        self.wait(1)
 
         #!Of course  it is only a statistical figure
 
         t02x6=MathTex(r"\text{MTBF,MTTF}=\frac{1}{\lambda}").move_to(UP*2)
-        t02x8=Tex(r"MTBF:",r"Mean Time between failure",r"$\implies$repairable")
-        t02x7=Tex(r"MTTF:",r"Mean Time to failure",r"$\implies$unrepairable").move_to(DOWN*2)
+        t02x8=Tex(r"MTBF:",r"Mean Time Between Failure",r"$\implies$repairable")
+        t02x7=Tex(r"MTTF:",r"Mean Time To Failure",r"$\implies$unrepairable").move_to(DOWN*2)
         s02x5_wrench=SVGMobject("graphics/wrench.svg",stroke_color=GREEN,fill_color=GREEN,fill_opacity=1.0).scale(0.5)
         s02x6_rec=SVGMobject("graphics/recycle.svg",stroke_color=RED,fill_color=RED,fill_opacity=1.0).scale(0.5)
 
@@ -495,7 +499,7 @@ class Serialparallel(Scene):
         self.play(FadeOut(t07x8))
         self.wait(1)
 
-        t07x1=Tex(r"Parallel systems",r"\\ rendundancy").move_to(UP*3+LEFT*4)
+        t07x1=Tex(r"Parallel systems").move_to(UP*3+LEFT*4)
 
         t07x2=Tex(r"Serial systems").move_to(UP*3+RIGHT*4)
 
@@ -523,7 +527,7 @@ class Serialparallel(Scene):
         for i in range(0,4):
             g07x2_par.add(SVGMobject("graphics/device_connected.svg",stroke_color=WHITE,fill_color=WHITE,fill_opacity=1.0).to_corner(LEFT).rotate(PI*0.5).scale(0.3))
 
-        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=0.006).move_to(UP*1.5+LEFT*4)
+        g07x2_par.add(t07x4_cont,s07x2_bev).arrange(RIGHT,buff=-0.05).move_to(UP*1.5+LEFT*4)
 
         self.play(FadeIn(t07x1[0]))
         self.play(Create(g07x2_par))
@@ -648,7 +652,7 @@ class Economics(Scene):
         o10x3=o10x1.plot(o10x5_fp,
                    color=WHITE)
         #self.add(o10x3)
-        self.play(FadeIn(t10x1.move_to(UP*3)))
+        #self.play(FadeIn(t10x1.move_to(UP*3)))
         self.add(o10x1)
         self.play(AnimationGroup(*[FadeIn(s) for s in g10x1],lag_ratio=1))
         self.wait(2)
@@ -783,7 +787,7 @@ class Availability(Scene):
         s12x2_lampnowork.move_to(s12x1_lampwork.get_center()+LEFT*0.2).set
         g12x2=VGroup(s12x1_lampwork,s12x2_lampnowork)
 
-        self.play(Create(t12x1))
+        #self.play(Create(t12x1))
         self.wait(1)
 
         self.play(Create(s12x2_lampnowork))
@@ -822,7 +826,7 @@ class Availability(Scene):
         self.wait(1)
         self.play(g12x1_f[0][0][12:16].animate.set(color=WHITE))
 
-        self.play(FadeIn(g12x1_f[1:3]))
+        #self.play(FadeIn(g12x1_f[1:3]))
         self.wait(1)
 
         t12x6.move_to((g12x1_f [0].get_center()))
