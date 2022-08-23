@@ -894,6 +894,59 @@ class endcard(Scene):
 
 
 
+#At the end I was not sure whether to keep in the title cards or not. Since I done most editing up to that point
+#the Titlecards are created here seperatly
+class afterthoughts(Scene):
+    def construct(self):
+        t14x1=Tex(r"Definition",font_size=80)
+        t14x2=Tex(r"Failure distributions",font_size=80)
+        t14x3=Tex(r"Evaluating serial and parallel systems",font_size=80)
+        t14x4=Tex(r"Economics for parallel systems",font_size=80)
+        t14x5=Tex(r"Enviromental Factors",font_size=80)
+        t14x6=Tex(r"Availability",font_size=80)
+        t14x7=Tex(r"*63\%",font_size=120)
+
+        self.clear()
+        self.wait(1)
+        self.play(FadeIn(t14x1))
+        self.wait(1)
+        self.play(FadeOut(t14x1))
+
+        self.clear()
+        self.wait(1)
+        self.play(FadeIn(t14x2))
+        self.wait(1)
+        self.play(FadeOut(t14x2))
+
+        self.clear()
+        self.wait(1)
+        self.play(FadeIn(t14x3))
+        self.wait(1)
+        self.play(FadeOut(t14x3))
+
+        self.clear()
+        self.wait(1)
+        self.play(FadeIn(t14x4))
+        self.wait(1)
+        self.play(FadeOut(t14x4))
+
+        self.clear()
+        self.wait(1)
+        self.play(FadeIn(t14x5))
+        self.wait(1)
+        self.play(FadeOut(t14x5))
+
+        self.clear()
+        self.wait(1)
+        self.play(FadeIn(t14x6))
+        self.wait(1)
+        self.play(FadeOut(t14x6))
+
+        self.clear()
+        self.add(t14x7)
+        self.wait()
+
+
 def getMatrixGreenN(resgroup):
     x=0
     gr=Color("green")
