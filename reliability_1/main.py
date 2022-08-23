@@ -868,6 +868,29 @@ class Availability(Scene):
 
         self.wait(1)
 
+class endcard(Scene):
+    def construct(self):
+        t13x1=Tex(r"Thanks for watching",font_size=50).move_to(UP*3)
+        t13x2=Tex(r"Further resources in the video describtion:",font_size=40).move_to(UP*0.5,)
+        t13x3=Tex(r"-Sourcecode for the animation",r"-Book with more detailed animation",font_size=40).arrange(DOWN).next_to(t13x2,DOWN)
+        t13x3=BulletedList(r"Sourcecode for the animation",r"Book with more detailed animation",r"Credits", height=4, width=4).arrange(DOWN,center=False, aligned_edge=LEFT).next_to(t13x2,DOWN)
+        t13x4=Tex(r"Enjoy!",font_size=50)
+
+        self.play(FadeIn(t13x1))
+        self.wait(1)
+        self.play(Create(t13x2))
+        self.wait
+        self.play(Create(t13x3))
+        self.wait(1)
+
+        self.wait(0.5)
+        self.play(FadeOut(t13x1,t13x2,t13x3))
+        self.wait(1)
+        self.play(FadeIn(t13x4))
+        self.wait(1)
+        self.play(FadeOut(t13x4))
+        self.wait(1)
+
 
 
 
